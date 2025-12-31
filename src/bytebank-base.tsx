@@ -6,8 +6,11 @@ import { store } from './store';
 import Navbar from './components/Navbar';
 import './styles/globals.css';
 
+console.log('🟢 @bytebank/base - Módulo carregado com sucesso!');
+
 // Componente Root para o Single SPA
 const Root: React.FC = () => {
+  console.log('🟢 @bytebank/base - Renderizando Navbar...');
   return (
     <Provider store={store}>
       <Navbar />
@@ -22,7 +25,7 @@ const lifecycles = singleSpaReact({
   rootComponent: Root,
   domElementGetter: () => document.getElementById('navbar') || document.body,
   errorBoundary(err: Error, info: any, props: any) {
-    console.error('Erro no @bytebank/base:', err, info);
+    console.error('❌ Erro no @bytebank/base:', err, info);
     return <div className="text-red-500 p-4">Erro ao carregar navbar</div>;
   },
 });
