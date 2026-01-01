@@ -13,7 +13,7 @@ const Root: React.FC = () => {
   console.log('🟢 @bytebank/base - Renderizando Navbar...');
   return (
     <Provider store={store}>
-      <Navbar />
+      <Navbar />      
     </Provider>
   );
 };
