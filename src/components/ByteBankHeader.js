@@ -1,4 +1,4 @@
-// Componente Header + Navbar =====
+// Componente Header + Navbar Agnóstico //
 
 class ByteBankHeader extends HTMLElement {
   constructor() {

@@ -1,4 +1,4 @@
-// ===== BYTEBANK FOOTER - WEB COMPONENT AGNÓSTICO =====
+// Componente Footer Agnóstico //
 
 class ByteBankFooter extends HTMLElement {
   constructor() {
@@ -7,7 +7,7 @@ class ByteBankFooter extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['logo-url'];
+    return ['logo-url', 'asset-base'];
   }
 
   connectedCallback() {
@@ -20,63 +20,58 @@ class ByteBankFooter extends HTMLElement {
     this.setupEventListeners();
   }
 
-  getServices() {
-    const servicesSlot = this.querySelector('[slot="services"]');
-    if (servicesSlot) {
-      const items = servicesSlot.querySelectorAll('[data-service-item]');
-      return Array.from(items).map(item => ({
-        label: item.getAttribute('data-label'),
-        href: item.getAttribute('data-href') || '#'
-      }));
-    }
+  // ===============================
+  // ASSET RESOLUTION (MF SAFE)
+  // ===============================
 
-    // Serviços padrão
+  get assetBase() {
+    return this.getAttribute('asset-base') || '';
+  }
+
+  resolveAsset(path) {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    return `${this.assetBase}${path.startsWith('/') ? '' : '/'}${path}`;
+  }
+
+  // ===============================
+  // DATA
+  // ===============================
+
+  getServices() {
     return [
       { label: 'Home', href: '/' },
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Financeiro', href: '/financeiro' },
-      { label: 'Para você', href: '/paravoce' }
+      { label: 'Para você', href: '/paravoce' },
     ];
   }
 
   getContacts() {
-    const contactsSlot = this.querySelector('[slot="contacts"]');
-    if (contactsSlot) {
-      const items = contactsSlot.querySelectorAll('[data-contact-item]');
-      return Array.from(items).map(item => ({
-        text: item.getAttribute('data-text')
-      }));
-    }
-
-    // Contatos padrão
     return [
       { text: '(11) 0800-000-0000' },
       { text: 'meajuda@bytebank.com.br' },
-      { text: 'ouvidoria@bytebank.com.br' }
+      { text: 'ouvidoria@bytebank.com.br' },
     ];
   }
 
   getSocialLinks() {
-    const socialSlot = this.querySelector('[slot="social"]');
-    if (socialSlot) {
-      const items = socialSlot.querySelectorAll('[data-social-item]');
-      return Array.from(items).map(item => ({
-        name: item.getAttribute('data-name'),
-        href: item.getAttribute('data-href'),
-        icon: item.getAttribute('data-icon')
-      }));
-    }
-
-    // Redes sociais padrão
     return [
-      { name: 'Instagram', href: 'https://instagram.com', icon: '/instagram.svg' },
-      { name: 'WhatsApp', href: 'https://whatsapp.com', icon: '/whatsapp.svg' },
-      { name: 'YouTube', href: 'https://youtube.com', icon: '/youtube.svg' }
+      { name: 'Instagram', href: 'https://instagram.com', icon: 'instagram.svg' },
+      { name: 'WhatsApp', href: 'https://whatsapp.com', icon: 'whatsapp.svg' },
+      { name: 'YouTube', href: 'https://youtube.com', icon: 'youtube.svg' },
     ];
   }
 
+  // ===============================
+  // RENDER
+  // ===============================
+
   render() {
-    const logoUrl = this.getAttribute('logo-url') || '/logo-white.svg';
+    const logoUrl = this.resolveAsset(
+      this.getAttribute('logo-url') || 'logo-white.svg'
+    );
+
     const services = this.getServices();
     const contacts = this.getContacts();
     const socialLinks = this.getSocialLinks();
@@ -93,10 +88,11 @@ class ByteBankFooter extends HTMLElement {
           background: #000;
           color: white;
           padding: 2.25rem 0;
+          font-family: system-ui, -apple-system, sans-serif;
         }
 
         .container {
-          max-width: 1400px;
+          max-width: 1620px;
           margin: 0 auto;
           padding: 0 1rem;
         }
@@ -115,12 +111,15 @@ class ByteBankFooter extends HTMLElement {
 
         h4 {
           margin-bottom: 1.25rem;
-          font-size: 1.30rem;
+          font-size: 1.3rem;
           font-weight: 600;
           color: #47a138;
         }
 
-        /* Serviços */
+        .title-footer {
+          text-align: left;
+        }
+
         .services-list {
           list-style: none;
           display: flex;
@@ -131,7 +130,7 @@ class ByteBankFooter extends HTMLElement {
         .service-link {
           color: white;
           text-decoration: none;
-          font-size: 1.130rem;
+          font-size: 1.13rem;
           transition: color 0.3s;
         }
 
@@ -139,16 +138,10 @@ class ByteBankFooter extends HTMLElement {
           color: #47a138;
         }
 
-        /* Contato */
         .contact-info {
           font-size: 1.125rem;
           margin-bottom: 0.75rem;
           line-height: 1.8;
-        }
-
-        /* Desenvolvido por */
-        .developer-section h4 {
-          text-align: left;
         }
 
         .logo-container {
@@ -160,11 +153,6 @@ class ByteBankFooter extends HTMLElement {
         .logo {
           width: 180px;
           height: 35px;
-        }
-
-        .social-links {
-          display: flex;
-          align-items: center;
         }
 
         .social-list {
@@ -193,50 +181,18 @@ class ByteBankFooter extends HTMLElement {
           height: 38px;
         }
 
-        /* Responsive */
         @media (min-width: 1024px) {
           .grid {
             grid-template-columns: repeat(3, 1fr);
           }
 
-          .developer-section h4 {
-            text-align: center;
-          }
-
-          .logo-container {
-            justify-content: center;
-          }
-
-          .social-links {
-            justify-content: center;
-          }
-        }
-
-        @media (min-width: 1280px) {
-          .grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-
-          .developer-section h4 {
-            text-align: center;
-          }
-
-          .logo-container {
-            justify-content: center;
-          }
-
-          .social-links {
-            justify-content: center;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .grid {
-            gap: 2rem;
-          }
-
+          .logo-container,
           .social-list {
-            gap: 1.5rem;
+            justify-content: center;
+          }
+
+          .title-footer {
+            text-align: center;
           }
         }
       </style>
@@ -244,72 +200,72 @@ class ByteBankFooter extends HTMLElement {
       <footer>
         <div class="container">
           <div class="grid">
-            
-            <!-- Serviços -->
-            <section aria-labelledby="services">
-              <h4 id="services">Serviços</h4>
-              <nav aria-label="Serviços">
-                <ul class="services-list" role="list">
-                  ${services.map(service => `
-                    <li>
-                      <a 
-                        href="${service.href}" 
-                        class="service-link"
-                        data-service-href="${service.href}"
-                        rel="noopener noreferrer"
-                      >
-                        ${service.label}
-                      </a>
-                    </li>
-                  `).join('')}
-                </ul>
-              </nav>
+
+            <section>
+              <h4>Serviços</h4>
+              <ul class="services-list">
+                ${services
+                  .map(
+                    service => `
+                  <li>
+                    <a
+                      href="${service.href}"
+                      class="service-link"
+                      data-service-href="${service.href}"
+                    >
+                      ${service.label}
+                    </a>
+                  </li>
+                `
+                  )
+                  .join('')}
+              </ul>
             </section>
 
-            <!-- Contato -->
-            <section aria-labelledby="contact">
-              <h4 id="contact">Contato</h4>
-              ${contacts.map(contact => `
+            <section>
+              <h4>Contato</h4>
+              ${contacts
+                .map(
+                  contact => `
                 <p class="contact-info">${contact.text}</p>
-              `).join('')}
+              `
+                )
+                .join('')}
             </section>
 
-            <!-- Desenvolvido por Bytebank -->
-            <section class="developer-section" aria-labelledby="developer-by-bytebank">
-              <h4 id="developer-by-bytebank">Desenvolvido por Bytebank</h4>
-              
+            <section>
+              <h4 class="title-footer">Desenvolvido por Bytebank</h4>
+
               <figure class="logo-container">
-                <img 
-                  src="${logoUrl}" 
-                  alt="Logo Branco ByteBank" 
+                <img
+                  src="${logoUrl}"
+                  alt="Logo Branco ByteBank"
                   class="logo"
                 />
               </figure>
 
-              <nav class="social-links" aria-label="Redes sociais">
-                <ul class="social-list" role="list">
-                  ${socialLinks.map(social => `
-                    <li>
-                      <a 
-                        href="${social.href}" 
-                        class="social-link"
-                        data-social-name="${social.name}"
-                        data-social-href="${social.href}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="${social.name}"
-                      >
-                        <img 
-                          src="${social.icon}" 
-                          alt="${social.name} icon" 
-                          class="social-icon ${social.name.toLowerCase()}"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    </li>
-                  `).join('')}
-                </ul>
-              </nav>
+              <ul class="social-list">
+                ${socialLinks
+                  .map(
+                    social => `
+                  <li>
+                    <a
+                      href="${social.href}"
+                      class="social-link"
+                      data-social-href="${social.href}"
+                      aria-label="${social.name}"
+                    >
+                      <img
+                        src="${this.resolveAsset(social.icon)}"
+                        alt="${social.name} icon"
+                        class="social-icon ${social.name.toLowerCase()}"
+                      />
+                    </a>
+                  </li>
+                `
+                  )
+                  .join('')}
+              </ul>
             </section>
 
           </div>
@@ -318,47 +274,43 @@ class ByteBankFooter extends HTMLElement {
     `;
   }
 
+  // ===============================
+  // EVENTS
+  // ===============================
+
   setupEventListeners() {
-    // Service links
-    const serviceLinks = this.shadowRoot.querySelectorAll('[data-service-href]');
-    serviceLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+    this.shadowRoot.querySelectorAll('[data-service-href]').forEach(link => {
+      link.addEventListener('click', e => {
         e.preventDefault();
-        const href = link.getAttribute('data-service-href');
-        
-        this.dispatchEvent(new CustomEvent('service-click', {
-          bubbles: true,
-          composed: true,
-          detail: { 
-            href, 
-            label: link.textContent.trim() 
-          }
-        }));
+        this.dispatchEvent(
+          new CustomEvent('service-click', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              href: link.getAttribute('data-service-href'),
+              label: link.textContent.trim(),
+            },
+          })
+        );
       });
     });
 
-    // Social links
-    const socialLinks = this.shadowRoot.querySelectorAll('[data-social-href]');
-    socialLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const name = link.getAttribute('data-social-name');
-        const href = link.getAttribute('data-social-href');
-        
-        this.dispatchEvent(new CustomEvent('social-click', {
-          bubbles: true,
-          composed: true,
-          detail: { name, href }
-        }));
-        
-        // Abrir em nova aba
-        window.open(href, '_blank', 'noopener,noreferrer');
+    this.shadowRoot.querySelectorAll('[data-social-href]').forEach(link => {
+      link.addEventListener('click', () => {
+        window.open(
+          link.getAttribute('data-social-href'),
+          '_blank',
+          'noopener,noreferrer'
+        );
       });
     });
   }
 }
 
-// Registrar o componente
+// ===============================
+// REGISTER
+// ===============================
+
 if (!customElements.get('bytebank-footer')) {
   customElements.define('bytebank-footer', ByteBankFooter);
   console.log('✅ ByteBank Footer agnóstico registrado!');
