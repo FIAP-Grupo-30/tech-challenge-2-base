@@ -1,25 +1,25 @@
 [
 	{ 
 		"id": 1,
-		"imagemUrl": "src/assets/conta-e-cartao-gratuitos.svg",
+		"imagemUrl": "/conta-e-cartao-gratuitos.svg",
 		"titulo": "Conta e cartão gratuitos", 
 		"descricao": "Isso mesmo, nossa conta é digital, sem custo fixo e mais que isso: sem tarifa de manutenção." 
 	},
 	{ 
 		"id": 2,
-		"imagemUrl": "src/assets/saques-sem-custo.svg",
+		"imagemUrl": "/saques-sem-custo.svg",
 		"titulo": "Saques sem custo", 
 		"descricao": "Você pode sacar gratuitamente 4x por mês de qualquer Banco 24h em qualquer lugar do país." 
 	},
 	{ 
 		"id": 3,
-		"imagemUrl": "src/assets/programa-de-pontos.svg",
+		"imagemUrl": "/programa-de-pontos.svg",
 		"titulo": "Programa de pontos", 
 		"descricao": "Você pode acumular pontos com suas compras no crédito sem pagar mensalidade!" 
 	},
 	{ 
 		"id": 4, 
-		"imagemUrl": "src/assets/seguro-dispositivos.svg",
+		"imagemUrl": "/seguro-dispositivos.svg",
 		"titulo": "Seguro dispositivos", 
 		"descricao": "Seus dispositivos móveis (computador e laptop) protegidos por uma mensalidade simbólica." 
 	}

@@ -38,9 +38,9 @@ export function vitePluginExposeEntry() {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = req.url || '';
-        if (url === '/bytebank-base.js') {
+        if (url === '/ByteBankHeader.js') {
           // Return a small ESM wrapper that re-exports the source entry
-          const content = `export * from '/src/bytebank-base.tsx';`;
+          const content = `export * from '/src/components/ByteBankHeader.js';`;
           res.setHeader('Content-Type', 'application/javascript');
           res.end(content);
           return;
