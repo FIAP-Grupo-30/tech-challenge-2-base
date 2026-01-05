@@ -5,7 +5,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-[#FFF]">
       
       <div className="bg-gradient-to-b from-[#004D61] to-[#FFF] pt-10 pb-23">
         <div className="container mx-auto">
