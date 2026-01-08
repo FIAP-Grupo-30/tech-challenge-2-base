@@ -1,9 +1,561 @@
-var Wt=Object.defineProperty;var qt=(e,t,r)=>t in e?Wt(e,t,{enumerable:!0,configurable:!0,writable:!0,value:r}):e[t]=r;var H=(e,t,r)=>qt(e,typeof t!="symbol"?t+"":t,r);import{jsxs as E,jsx as f,Fragment as Kt}from"react/jsx-runtime";import*as T from"react";import pt,{useEffect as me,useState as ce,useCallback as K,forwardRef as We,useRef as Gt}from"react";import*as Ht from"react-dom";import Xt from"single-spa-react";var mt={exports:{}},yt={};/**
- * @license React
- * use-sync-external-store-with-selector.production.js
+import*as d from"react";import T,{useEffect as j}from"react";import*as de from"react-dom";import ue from"single-spa-react";import{jsx as p,jsxs as E}from"react/jsx-runtime";/**
+ * @remix-run/router v1.23.1
  *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * Copyright (c) Remix Software Inc.
  *
  * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */var ee=pt;function Jt(e,t){return e===t&&(e!==0||1/e===1/t)||e!==e&&t!==t}var Yt=typeof Object.is=="function"?Object.is:Jt,Qt=ee.useSyncExternalStore,Zt=ee.useRef,er=ee.useEffect,tr=ee.useMemo,rr=ee.useDebugValue;yt.useSyncExternalStoreWithSelector=function(e,t,r,n,o){var i=Zt(null);if(i.current===null){var a={hasValue:!1,value:null};i.current=a}else a=i.current;i=tr(function(){function s(h){if(!u){if(u=!0,l=h,h=n(h),o!==void 0&&a.hasValue){var g=a.value;if(o(g,h))return d=g}return d=h}if(g=d,Yt(l,h))return g;var x=n(h);return o!==void 0&&o(g,x)?(l=h,g):(l=h,d=x)}var u=!1,l,d,p=r===void 0?null:r;return[function(){return s(t())},p===null?void 0:function(){return s(p())}]},[t,r,n,o]);var c=Qt(e,i[0],i[1]);return er(function(){a.hasValue=!0,a.value=c},[c]),rr(c),c};mt.exports=yt;var nr=mt.exports;function or(e){e()}function ir(){let e=null,t=null;return{clear(){e=null,t=null},notify(){or(()=>{let r=e;for(;r;)r.callback(),r=r.next})},get(){const r=[];let n=e;for(;n;)r.push(n),n=n.next;return r},subscribe(r){let n=!0;const o=t={callback:r,next:null,prev:t};return o.prev?o.prev.next=o:e=o,function(){!n||e===null||(n=!1,o.next?o.next.prev=o.prev:t=o.prev,o.prev?o.prev.next=o.next:e=o.next)}}}}var Ze={notify(){},get:()=>[]};function ar(e,t){let r,n=Ze,o=0,i=!1;function a(x){l();const w=n.subscribe(x);let v=!1;return()=>{v||(v=!0,w(),d())}}function c(){n.notify()}function s(){g.onStateChange&&g.onStateChange()}function u(){return i}function l(){o++,r||(r=e.subscribe(s),n=ir())}function d(){o--,r&&o===0&&(r(),r=void 0,n.clear(),n=Ze)}function p(){i||(i=!0,l())}function h(){i&&(i=!1,d())}const g={addNestedSub:a,notifyNestedSubs:c,handleChangeWrapper:s,isSubscribed:u,trySubscribe:p,tryUnsubscribe:h,getListeners:()=>n};return g}var sr=()=>typeof window<"u"&&typeof window.document<"u"&&typeof window.document.createElement<"u",cr=sr(),lr=()=>typeof navigator<"u"&&navigator.product==="ReactNative",ur=lr(),dr=()=>cr||ur?T.useLayoutEffect:T.useEffect,fr=dr(),Se=Symbol.for("react-redux-context"),xe=typeof globalThis<"u"?globalThis:{};function hr(){if(!T.createContext)return{};const e=xe[Se]??(xe[Se]=new Map);let t=e.get(T.createContext);return t||(t=T.createContext(null),e.set(T.createContext,t)),t}var j=hr();function pr(e){const{children:t,context:r,serverState:n,store:o}=e,i=T.useMemo(()=>{const s=ar(o);return{store:o,subscription:s,getServerState:n?()=>n:void 0}},[o,n]),a=T.useMemo(()=>o.getState(),[o]);fr(()=>{const{subscription:s}=i;return s.onStateChange=s.notifyNestedSubs,s.trySubscribe(),a!==o.getState()&&s.notifyNestedSubs(),()=>{s.tryUnsubscribe(),s.onStateChange=void 0}},[i,a]);const c=r||j;return T.createElement(c.Provider,{value:i},t)}var mr=pr;function qe(e=j){return function(){return T.useContext(e)}}var gt=qe();function bt(e=j){const t=e===j?gt:qe(e),r=()=>{const{store:n}=t();return n};return Object.assign(r,{withTypes:()=>r}),r}var yr=bt();function gr(e=j){const t=e===j?yr:bt(e),r=()=>t().dispatch;return Object.assign(r,{withTypes:()=>r}),r}var br=gr(),wr=(e,t)=>e===t;function vr(e=j){const t=e===j?gt:qe(e),r=(n,o={})=>{const{equalityFn:i=wr}=typeof o=="function"?{equalityFn:o}:o,a=t(),{store:c,subscription:s,getServerState:u}=a;T.useRef(!0);const l=T.useCallback({[n.name](p){return n(p)}}[n.name],[n]),d=nr.useSyncExternalStoreWithSelector(s.addNestedSub,c.getState,u||c.getState,l,i);return T.useDebugValue(d),d};return Object.assign(r,{withTypes:()=>r}),r}var _r=vr();function C(e){return`Minified Redux error #${e}; visit https://redux.js.org/Errors?code=${e} for the full message or use the non-minified dev environment for full errors. `}var Sr=typeof Symbol=="function"&&Symbol.observable||"@@observable",et=Sr,Ce=()=>Math.random().toString(36).substring(7).split("").join("."),xr={INIT:`@@redux/INIT${Ce()}`,REPLACE:`@@redux/REPLACE${Ce()}`,PROBE_UNKNOWN_ACTION:()=>`@@redux/PROBE_UNKNOWN_ACTION${Ce()}`},le=xr;function Ke(e){if(typeof e!="object"||e===null)return!1;let t=e;for(;Object.getPrototypeOf(t)!==null;)t=Object.getPrototypeOf(t);return Object.getPrototypeOf(e)===t||Object.getPrototypeOf(e)===null}function wt(e,t,r){if(typeof e!="function")throw new Error(C(2));if(typeof t=="function"&&typeof r=="function"||typeof r=="function"&&typeof arguments[3]=="function")throw new Error(C(0));if(typeof t=="function"&&typeof r>"u"&&(r=t,t=void 0),typeof r<"u"){if(typeof r!="function")throw new Error(C(1));return r(wt)(e,t)}let n=e,o=t,i=new Map,a=i,c=0,s=!1;function u(){a===i&&(a=new Map,i.forEach((w,v)=>{a.set(v,w)}))}function l(){if(s)throw new Error(C(3));return o}function d(w){if(typeof w!="function")throw new Error(C(4));if(s)throw new Error(C(5));let v=!0;u();const A=c++;return a.set(A,w),function(){if(v){if(s)throw new Error(C(6));v=!1,u(),a.delete(A),i=null}}}function p(w){if(!Ke(w))throw new Error(C(7));if(typeof w.type>"u")throw new Error(C(8));if(typeof w.type!="string")throw new Error(C(17));if(s)throw new Error(C(9));try{s=!0,o=n(o,w)}finally{s=!1}return(i=a).forEach(A=>{A()}),w}function h(w){if(typeof w!="function")throw new Error(C(10));n=w,p({type:le.REPLACE})}function g(){const w=d;return{subscribe(v){if(typeof v!="object"||v===null)throw new Error(C(11));function A(){const m=v;m.next&&m.next(l())}return A(),{unsubscribe:w(A)}},[et](){return this}}}return p({type:le.INIT}),{dispatch:p,subscribe:d,getState:l,replaceReducer:h,[et]:g}}function Cr(e){Object.keys(e).forEach(t=>{const r=e[t];if(typeof r(void 0,{type:le.INIT})>"u")throw new Error(C(12));if(typeof r(void 0,{type:le.PROBE_UNKNOWN_ACTION()})>"u")throw new Error(C(13))})}function vt(e){const t=Object.keys(e),r={};for(let i=0;i<t.length;i++){const a=t[i];typeof e[a]=="function"&&(r[a]=e[a])}const n=Object.keys(r);let o;try{Cr(r)}catch(i){o=i}return function(a={},c){if(o)throw o;let s=!1;const u={};for(let l=0;l<n.length;l++){const d=n[l],p=r[d],h=a[d],g=p(h,c);if(typeof g>"u")throw c&&c.type,new Error(C(14));u[d]=g,s=s||g!==h}return s=s||n.length!==Object.keys(a).length,s?u:a}}function ue(...e){return e.length===0?t=>t:e.length===1?e[0]:e.reduce((t,r)=>(...n)=>t(r(...n)))}function Er(...e){return t=>(r,n)=>{const o=t(r,n);let i=()=>{throw new Error(C(15))};const a={getState:o.getState,dispatch:(s,...u)=>i(s,...u)},c=e.map(s=>s(a));return i=ue(...c)(o.dispatch),{...o,dispatch:i}}}function kr(e){return Ke(e)&&"type"in e&&typeof e.type=="string"}var _t=Symbol.for("immer-nothing"),tt=Symbol.for("immer-draftable"),k=Symbol.for("immer-state");function D(e,...t){throw new Error(`[Immer] minified error nr: ${e}. Full error at: https://bit.ly/3cXEKWf`)}var R=Object,G=R.getPrototypeOf,de="constructor",ye="prototype",Ie="configurable",fe="enumerable",ae="writable",Y="value",F=e=>!!e&&!!e[k];function O(e){var t;return e?St(e)||ge(e)||!!e[tt]||!!((t=e[de])!=null&&t[tt])||be(e)||we(e):!1}var Ar=R[ye][de].toString(),rt=new WeakMap;function St(e){if(!e||!Ge(e))return!1;const t=G(e);if(t===null||t===R[ye])return!0;const r=R.hasOwnProperty.call(t,de)&&t[de];if(r===Object)return!0;if(!W(r))return!1;let n=rt.get(r);return n===void 0&&(n=Function.toString.call(r),rt.set(r,n)),n===Ar}function te(e,t,r=!0){re(e)===0?(r?Reflect.ownKeys(e):R.keys(e)).forEach(o=>{t(o,e[o],e)}):e.forEach((n,o)=>t(o,n,e))}function re(e){const t=e[k];return t?t.type_:ge(e)?1:be(e)?2:we(e)?3:0}var nt=(e,t,r=re(e))=>r===2?e.has(t):R[ye].hasOwnProperty.call(e,t),Le=(e,t,r=re(e))=>r===2?e.get(t):e[t],he=(e,t,r,n=re(e))=>{n===2?e.set(t,r):n===3?e.add(r):e[t]=r};function Nr(e,t){return e===t?e!==0||1/e===1/t:e!==e&&t!==t}var ge=Array.isArray,be=e=>e instanceof Map,we=e=>e instanceof Set,Ge=e=>typeof e=="object",W=e=>typeof e=="function",Ee=e=>typeof e=="boolean";function Tr(e){const t=+e;return Number.isInteger(t)&&String(t)===e}var I=e=>e.copy_||e.base_,He=e=>e.modified_?e.copy_:e.base_;function Fe(e,t){if(be(e))return new Map(e);if(we(e))return new Set(e);if(ge(e))return Array[ye].slice.call(e);const r=St(e);if(t===!0||t==="class_only"&&!r){const n=R.getOwnPropertyDescriptors(e);delete n[k];let o=Reflect.ownKeys(n);for(let i=0;i<o.length;i++){const a=o[i],c=n[a];c[ae]===!1&&(c[ae]=!0,c[Ie]=!0),(c.get||c.set)&&(n[a]={[Ie]:!0,[ae]:!0,[fe]:c[fe],[Y]:e[a]})}return R.create(G(e),n)}else{const n=G(e);if(n!==null&&r)return{...e};const o=R.create(n);return R.assign(o,e)}}function Xe(e,t=!1){return ve(e)||F(e)||!O(e)||(re(e)>1&&R.defineProperties(e,{set:ne,add:ne,clear:ne,delete:ne}),R.freeze(e),t&&te(e,(r,n)=>{Xe(n,!0)},!1)),e}function Rr(){D(2)}var ne={[Y]:Rr};function ve(e){return e===null||!Ge(e)?!0:R.isFrozen(e)}var pe="MapSet",ze="Patches",ot="ArrayMethods",xt={};function U(e){const t=xt[e];return t||D(0,e),t}var it=e=>!!xt[e],Q,Ct=()=>Q,Pr=(e,t)=>({drafts_:[],parent_:e,immer_:t,canAutoFreeze_:!0,unfinalizedDrafts_:0,handledSet_:new Set,processedForPatches_:new Set,mapSetPlugin_:it(pe)?U(pe):void 0,arrayMethodsPlugin_:it(ot)?U(ot):void 0});function at(e,t){t&&(e.patchPlugin_=U(ze),e.patches_=[],e.inversePatches_=[],e.patchListener_=t)}function je(e){Be(e),e.drafts_.forEach(Dr),e.drafts_=null}function Be(e){e===Q&&(Q=e.parent_)}var st=e=>Q=Pr(Q,e);function Dr(e){const t=e[k];t.type_===0||t.type_===1?t.revoke_():t.revoked_=!0}function ct(e,t){t.unfinalizedDrafts_=t.drafts_.length;const r=t.drafts_[0];if(e!==void 0&&e!==r){r[k].modified_&&(je(t),D(4)),O(e)&&(e=lt(t,e));const{patchPlugin_:o}=t;o&&o.generateReplacementPatches_(r[k].base_,e,t)}else e=lt(t,r);return Mr(t,e,!0),je(t),t.patches_&&t.patchListener_(t.patches_,t.inversePatches_),e!==_t?e:void 0}function lt(e,t){if(ve(t))return t;const r=t[k];if(!r)return Je(t,e.handledSet_,e);if(!_e(r,e))return t;if(!r.modified_)return r.base_;if(!r.finalized_){const{callbacks_:n}=r;if(n)for(;n.length>0;)n.pop()(e);At(r,e)}return r.copy_}function Mr(e,t,r=!1){!e.parent_&&e.immer_.autoFreeze_&&e.canAutoFreeze_&&Xe(t,r)}function Et(e){e.finalized_=!0,e.scope_.unfinalizedDrafts_--}var _e=(e,t)=>e.scope_===t,Or=[];function kt(e,t,r,n){const o=I(e),i=e.type_;if(n!==void 0&&Le(o,n,i)===t){he(o,n,r,i);return}if(!e.draftLocations_){const c=e.draftLocations_=new Map;te(o,(s,u)=>{if(F(u)){const l=c.get(u)||[];l.push(s),c.set(u,l)}})}const a=e.draftLocations_.get(t)??Or;for(const c of a)he(o,c,r,i)}function Ir(e,t,r){e.callbacks_.push(function(o){var c;const i=t;if(!i||!_e(i,o))return;(c=o.mapSetPlugin_)==null||c.fixSetContents(i);const a=He(i);kt(e,i.draft_??i,a,r),At(i,o)})}function At(e,t){var n;if(e.modified_&&!e.finalized_&&(e.type_===3||e.type_===1&&e.allIndicesReassigned_||(((n=e.assigned_)==null?void 0:n.size)??0)>0)){const{patchPlugin_:o}=t;if(o){const i=o.getPath(e);i&&o.generatePatches_(e,i,t)}Et(e)}}function Lr(e,t,r){const{scope_:n}=e;if(F(r)){const o=r[k];_e(o,n)&&o.callbacks_.push(function(){se(e);const a=He(o);kt(e,r,a,t)})}else O(r)&&e.callbacks_.push(function(){const i=I(e);Le(i,t,e.type_)===r&&n.drafts_.length>1&&(e.assigned_.get(t)??!1)===!0&&e.copy_&&Je(Le(e.copy_,t,e.type_),n.handledSet_,n)})}function Je(e,t,r){return!r.immer_.autoFreeze_&&r.unfinalizedDrafts_<1||F(e)||t.has(e)||!O(e)||ve(e)||(t.add(e),te(e,(n,o)=>{if(F(o)){const i=o[k];if(_e(i,r)){const a=He(i);he(e,n,a,e.type_),Et(i)}}else O(o)&&Je(o,t,r)})),e}function Fr(e,t){const r=ge(e),n={type_:r?1:0,scope_:t?t.scope_:Ct(),modified_:!1,finalized_:!1,assigned_:void 0,parent_:t,base_:e,draft_:null,copy_:null,revoke_:null,isManual_:!1,callbacks_:void 0};let o=n,i=Ye;r&&(o=[n],i=Z);const{revoke:a,proxy:c}=Proxy.revocable(o,i);return n.draft_=c,n.revoke_=a,[c,n]}var Ye={get(e,t){if(t===k)return e;let r=e.scope_.arrayMethodsPlugin_;const n=e.type_===1&&typeof t=="string";if(n&&r!=null&&r.isArrayOperationMethod(t))return r.createMethodInterceptor(e,t);const o=I(e);if(!nt(o,t,e.type_))return zr(e,o,t);const i=o[t];if(e.finalized_||!O(i)||n&&e.operationMethod&&(r!=null&&r.isMutatingArrayMethod(e.operationMethod))&&Tr(t))return i;if(i===ke(e.base_,t)){se(e);const a=e.type_===1?+t:t,c=Ue(e.scope_,i,e,a);return e.copy_[a]=c}return i},has(e,t){return t in I(e)},ownKeys(e){return Reflect.ownKeys(I(e))},set(e,t,r){const n=Nt(I(e),t);if(n!=null&&n.set)return n.set.call(e.draft_,r),!0;if(!e.modified_){const o=ke(I(e),t),i=o==null?void 0:o[k];if(i&&i.base_===r)return e.copy_[t]=r,e.assigned_.set(t,!1),!0;if(Nr(r,o)&&(r!==void 0||nt(e.base_,t,e.type_)))return!0;se(e),$e(e)}return e.copy_[t]===r&&(r!==void 0||t in e.copy_)||Number.isNaN(r)&&Number.isNaN(e.copy_[t])||(e.copy_[t]=r,e.assigned_.set(t,!0),Lr(e,t,r)),!0},deleteProperty(e,t){return se(e),ke(e.base_,t)!==void 0||t in e.base_?(e.assigned_.set(t,!1),$e(e)):e.assigned_.delete(t),e.copy_&&delete e.copy_[t],!0},getOwnPropertyDescriptor(e,t){const r=I(e),n=Reflect.getOwnPropertyDescriptor(r,t);return n&&{[ae]:!0,[Ie]:e.type_!==1||t!=="length",[fe]:n[fe],[Y]:r[t]}},defineProperty(){D(11)},getPrototypeOf(e){return G(e.base_)},setPrototypeOf(){D(12)}},Z={};te(Ye,(e,t)=>{Z[e]=function(){const r=arguments;return r[0]=r[0][0],t.apply(this,r)}});Z.deleteProperty=function(e,t){return Z.set.call(this,e,t,void 0)};Z.set=function(e,t,r){return Ye.set.call(this,e[0],t,r,e[0])};function ke(e,t){const r=e[k];return(r?I(r):e)[t]}function zr(e,t,r){var o;const n=Nt(t,r);return n?Y in n?n[Y]:(o=n.get)==null?void 0:o.call(e.draft_):void 0}function Nt(e,t){if(!(t in e))return;let r=G(e);for(;r;){const n=Object.getOwnPropertyDescriptor(r,t);if(n)return n;r=G(r)}}function $e(e){e.modified_||(e.modified_=!0,e.parent_&&$e(e.parent_))}function se(e){e.copy_||(e.assigned_=new Map,e.copy_=Fe(e.base_,e.scope_.immer_.useStrictShallowCopy_))}var jr=class{constructor(e){this.autoFreeze_=!0,this.useStrictShallowCopy_=!1,this.useStrictIteration_=!1,this.produce=(t,r,n)=>{if(W(t)&&!W(r)){const i=r;r=t;const a=this;return function(s=i,...u){return a.produce(s,l=>r.call(this,l,...u))}}W(r)||D(6),n!==void 0&&!W(n)&&D(7);let o;if(O(t)){const i=st(this),a=Ue(i,t,void 0);let c=!0;try{o=r(a),c=!1}finally{c?je(i):Be(i)}return at(i,n),ct(o,i)}else if(!t||!Ge(t)){if(o=r(t),o===void 0&&(o=t),o===_t&&(o=void 0),this.autoFreeze_&&Xe(o,!0),n){const i=[],a=[];U(ze).generateReplacementPatches_(t,o,{patches_:i,inversePatches_:a}),n(i,a)}return o}else D(1,t)},this.produceWithPatches=(t,r)=>{if(W(t))return(a,...c)=>this.produceWithPatches(a,s=>t(s,...c));let n,o;return[this.produce(t,r,(a,c)=>{n=a,o=c}),n,o]},Ee(e==null?void 0:e.autoFreeze)&&this.setAutoFreeze(e.autoFreeze),Ee(e==null?void 0:e.useStrictShallowCopy)&&this.setUseStrictShallowCopy(e.useStrictShallowCopy),Ee(e==null?void 0:e.useStrictIteration)&&this.setUseStrictIteration(e.useStrictIteration)}createDraft(e){O(e)||D(8),F(e)&&(e=Br(e));const t=st(this),r=Ue(t,e,void 0);return r[k].isManual_=!0,Be(t),r}finishDraft(e,t){const r=e&&e[k];(!r||!r.isManual_)&&D(9);const{scope_:n}=r;return at(n,t),ct(void 0,n)}setAutoFreeze(e){this.autoFreeze_=e}setUseStrictShallowCopy(e){this.useStrictShallowCopy_=e}setUseStrictIteration(e){this.useStrictIteration_=e}shouldUseStrictIteration(){return this.useStrictIteration_}applyPatches(e,t){let r;for(r=t.length-1;r>=0;r--){const o=t[r];if(o.path.length===0&&o.op==="replace"){e=o.value;break}}r>-1&&(t=t.slice(r+1));const n=U(ze).applyPatches_;return F(e)?n(e,t):this.produce(e,o=>n(o,t))}};function Ue(e,t,r,n){const[o,i]=be(t)?U(pe).proxyMap_(t,r):we(t)?U(pe).proxySet_(t,r):Fr(t,r);return((r==null?void 0:r.scope_)??Ct()).drafts_.push(o),i.callbacks_=(r==null?void 0:r.callbacks_)??[],i.key_=n,r&&n!==void 0?Ir(r,i,n):i.callbacks_.push(function(s){var l;(l=s.mapSetPlugin_)==null||l.fixSetContents(i);const{patchPlugin_:u}=s;i.modified_&&u&&u.generatePatches_(i,[],s)}),o}function Br(e){return F(e)||D(10,e),Tt(e)}function Tt(e){if(!O(e)||ve(e))return e;const t=e[k];let r,n=!0;if(t){if(!t.modified_)return t.base_;t.finalized_=!0,r=Fe(e,t.scope_.immer_.useStrictShallowCopy_),n=t.scope_.immer_.shouldUseStrictIteration()}else r=Fe(e,!0);return te(r,(o,i)=>{he(r,o,Tt(i))},n),t&&(t.finalized_=!1),r}var $r=new jr,Rt=$r.produce;function Pt(e){return({dispatch:r,getState:n})=>o=>i=>typeof i=="function"?i(r,n,e):o(i)}var Ur=Pt(),Vr=Pt,Wr=typeof window<"u"&&window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__:function(){if(arguments.length!==0)return typeof arguments[0]=="object"?ue:ue.apply(null,arguments)},qr=e=>e&&typeof e.match=="function";function J(e,t){function r(...n){if(t){let o=t(...n);if(!o)throw new Error(L(0));return{type:e,payload:o.payload,..."meta"in o&&{meta:o.meta},..."error"in o&&{error:o.error}}}return{type:e,payload:n[0]}}return r.toString=()=>`${e}`,r.type=e,r.match=n=>kr(n)&&n.type===e,r}var Dt=class X extends Array{constructor(...t){super(...t),Object.setPrototypeOf(this,X.prototype)}static get[Symbol.species](){return X}concat(...t){return super.concat.apply(this,t)}prepend(...t){return t.length===1&&Array.isArray(t[0])?new X(...t[0].concat(this)):new X(...t.concat(this))}};function ut(e){return O(e)?Rt(e,()=>{}):e}function oe(e,t,r){return e.has(t)?e.get(t):e.set(t,r(t)).get(t)}function Kr(e){return typeof e=="boolean"}var Gr=()=>function(t){const{thunk:r=!0,immutableCheck:n=!0,serializableCheck:o=!0,actionCreatorCheck:i=!0}=t??{};let a=new Dt;return r&&(Kr(r)?a.push(Ur):a.push(Vr(r.extraArgument))),a},Hr="RTK_autoBatch",dt=e=>t=>{setTimeout(t,e)},Xr=(e={type:"raf"})=>t=>(...r)=>{const n=t(...r);let o=!0,i=!1,a=!1;const c=new Set,s=e.type==="tick"?queueMicrotask:e.type==="raf"?typeof window<"u"&&window.requestAnimationFrame?window.requestAnimationFrame:dt(10):e.type==="callback"?e.queueNotification:dt(e.timeout),u=()=>{a=!1,i&&(i=!1,c.forEach(l=>l()))};return Object.assign({},n,{subscribe(l){const d=()=>o&&l(),p=n.subscribe(d);return c.add(l),()=>{p(),c.delete(l)}},dispatch(l){var d;try{return o=!((d=l==null?void 0:l.meta)!=null&&d[Hr]),i=!o,i&&(a||(a=!0,s(u))),n.dispatch(l)}finally{o=!0}}})},Jr=e=>function(r){const{autoBatch:n=!0}=r??{};let o=new Dt(e);return n&&o.push(Xr(typeof n=="object"?n:void 0)),o};function Yr(e){const t=Gr(),{reducer:r=void 0,middleware:n,devTools:o=!0,preloadedState:i=void 0,enhancers:a=void 0}=e||{};let c;if(typeof r=="function")c=r;else if(Ke(r))c=vt(r);else throw new Error(L(1));let s;typeof n=="function"?s=n(t):s=t();let u=ue;o&&(u=Wr({trace:!1,...typeof o=="object"&&o}));const l=Er(...s),d=Jr(l);let p=typeof a=="function"?a(d):d();const h=u(...p);return wt(c,i,h)}function Mt(e){const t={},r=[];let n;const o={addCase(i,a){const c=typeof i=="string"?i:i.type;if(!c)throw new Error(L(28));if(c in t)throw new Error(L(29));return t[c]=a,o},addAsyncThunk(i,a){return a.pending&&(t[i.pending.type]=a.pending),a.rejected&&(t[i.rejected.type]=a.rejected),a.fulfilled&&(t[i.fulfilled.type]=a.fulfilled),a.settled&&r.push({matcher:i.settled,reducer:a.settled}),o},addMatcher(i,a){return r.push({matcher:i,reducer:a}),o},addDefaultCase(i){return n=i,o}};return e(o),[t,r,n]}function Qr(e){return typeof e=="function"}function Zr(e,t){let[r,n,o]=Mt(t),i;if(Qr(e))i=()=>ut(e());else{const c=ut(e);i=()=>c}function a(c=i(),s){let u=[r[s.type],...n.filter(({matcher:l})=>l(s)).map(({reducer:l})=>l)];return u.filter(l=>!!l).length===0&&(u=[o]),u.reduce((l,d)=>{if(d)if(F(l)){const h=d(l,s);return h===void 0?l:h}else{if(O(l))return Rt(l,p=>d(p,s));{const p=d(l,s);if(p===void 0){if(l===null)return l;throw Error("A case reducer on a non-draftable value must not return undefined")}return p}}return l},c)}return a.getInitialState=i,a}var en=(e,t)=>qr(e)?e.match(t):e(t);function tn(...e){return t=>e.some(r=>en(r,t))}var rn="ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW",nn=(e=21)=>{let t="",r=e;for(;r--;)t+=rn[Math.random()*64|0];return t},on=["name","message","stack","code"],Ae=class{constructor(e,t){H(this,"_type");this.payload=e,this.meta=t}},ft=class{constructor(e,t){H(this,"_type");this.payload=e,this.meta=t}},an=e=>{if(typeof e=="object"&&e!==null){const t={};for(const r of on)typeof e[r]=="string"&&(t[r]=e[r]);return t}return{message:String(e)}},ht="External signal was aborted",V=(()=>{function e(t,r,n){const o=J(t+"/fulfilled",(s,u,l,d)=>({payload:s,meta:{...d||{},arg:l,requestId:u,requestStatus:"fulfilled"}})),i=J(t+"/pending",(s,u,l)=>({payload:void 0,meta:{...l||{},arg:u,requestId:s,requestStatus:"pending"}})),a=J(t+"/rejected",(s,u,l,d,p)=>({payload:d,error:(n&&n.serializeError||an)(s||"Rejected"),meta:{...p||{},arg:l,requestId:u,rejectedWithValue:!!d,requestStatus:"rejected",aborted:(s==null?void 0:s.name)==="AbortError",condition:(s==null?void 0:s.name)==="ConditionError"}}));function c(s,{signal:u}={}){return(l,d,p)=>{const h=n!=null&&n.idGenerator?n.idGenerator(s):nn(),g=new AbortController;let x,w;function v(N){w=N,g.abort()}u&&(u.aborted?v(ht):u.addEventListener("abort",()=>v(ht),{once:!0}));const A=async function(){var b,_;let N;try{let S=(b=n==null?void 0:n.condition)==null?void 0:b.call(n,s,{getState:d,extra:p});if(cn(S)&&(S=await S),S===!1||g.signal.aborted)throw{name:"ConditionError",message:"Aborted due to condition callback returning false."};const P=new Promise((y,z)=>{x=()=>{z({name:"AbortError",message:w||"Aborted"})},g.signal.addEventListener("abort",x,{once:!0})});l(i(h,s,(_=n==null?void 0:n.getPendingMeta)==null?void 0:_.call(n,{requestId:h,arg:s},{getState:d,extra:p}))),N=await Promise.race([P,Promise.resolve(r(s,{dispatch:l,getState:d,extra:p,requestId:h,signal:g.signal,abort:v,rejectWithValue:(y,z)=>new Ae(y,z),fulfillWithValue:(y,z)=>new ft(y,z)})).then(y=>{if(y instanceof Ae)throw y;return y instanceof ft?o(y.payload,h,s,y.meta):o(y,h,s)})])}catch(S){N=S instanceof Ae?a(null,h,s,S.payload,S.meta):a(S,h,s)}finally{x&&g.signal.removeEventListener("abort",x)}return n&&!n.dispatchConditionRejection&&a.match(N)&&N.meta.condition||l(N),N}();return Object.assign(A,{abort:v,requestId:h,arg:s,unwrap(){return A.then(sn)}})}}return Object.assign(c,{pending:i,rejected:a,fulfilled:o,settled:tn(a,o),typePrefix:t})}return e.withTypes=()=>e,e})();function sn(e){if(e.meta&&e.meta.rejectedWithValue)throw e.payload;if(e.error)throw e.error;return e.payload}function cn(e){return e!==null&&typeof e=="object"&&typeof e.then=="function"}var ln=Symbol.for("rtk-slice-createasyncthunk");function un(e,t){return`${e}/${t}`}function dn({creators:e}={}){var r;const t=(r=e==null?void 0:e.asyncThunk)==null?void 0:r[ln];return function(o){const{name:i,reducerPath:a=i}=o;if(!i)throw new Error(L(11));const c=(typeof o.reducers=="function"?o.reducers(hn()):o.reducers)||{},s=Object.keys(c),u={sliceCaseReducersByName:{},sliceCaseReducersByType:{},actionCreators:{},sliceMatchers:[]},l={addCase(m,b){const _=typeof m=="string"?m:m.type;if(!_)throw new Error(L(12));if(_ in u.sliceCaseReducersByType)throw new Error(L(13));return u.sliceCaseReducersByType[_]=b,l},addMatcher(m,b){return u.sliceMatchers.push({matcher:m,reducer:b}),l},exposeAction(m,b){return u.actionCreators[m]=b,l},exposeCaseReducer(m,b){return u.sliceCaseReducersByName[m]=b,l}};s.forEach(m=>{const b=c[m],_={reducerName:m,type:un(i,m),createNotation:typeof o.reducers=="function"};mn(b)?gn(_,b,l,t):pn(_,b,l)});function d(){const[m={},b=[],_=void 0]=typeof o.extraReducers=="function"?Mt(o.extraReducers):[o.extraReducers],S={...m,...u.sliceCaseReducersByType};return Zr(o.initialState,P=>{for(let y in S)P.addCase(y,S[y]);for(let y of u.sliceMatchers)P.addMatcher(y.matcher,y.reducer);for(let y of b)P.addMatcher(y.matcher,y.reducer);_&&P.addDefaultCase(_)})}const p=m=>m,h=new Map,g=new WeakMap;let x;function w(m,b){return x||(x=d()),x(m,b)}function v(){return x||(x=d()),x.getInitialState()}function A(m,b=!1){function _(P){let y=P[m];return typeof y>"u"&&b&&(y=oe(g,_,v)),y}function S(P=p){const y=oe(h,b,()=>new WeakMap);return oe(y,P,()=>{const z={};for(const[Ut,Vt]of Object.entries(o.selectors??{}))z[Ut]=fn(Vt,P,()=>oe(g,P,v),b);return z})}return{reducerPath:m,getSelectors:S,get selectors(){return S(_)},selectSlice:_}}const N={name:i,reducer:w,actions:u.actionCreators,caseReducers:u.sliceCaseReducersByName,getInitialState:v,...A(a),injectInto(m,{reducerPath:b,..._}={}){const S=b??a;return m.inject({reducerPath:S,reducer:w},_),{...N,...A(S,!0)}}};return N}}function fn(e,t,r,n){function o(i,...a){let c=t(i);return typeof c>"u"&&n&&(c=r()),e(c,...a)}return o.unwrapped=e,o}var Qe=dn();function hn(){function e(t,r){return{_reducerDefinitionType:"asyncThunk",payloadCreator:t,...r}}return e.withTypes=()=>e,{reducer(t){return Object.assign({[t.name](...r){return t(...r)}}[t.name],{_reducerDefinitionType:"reducer"})},preparedReducer(t,r){return{_reducerDefinitionType:"reducerWithPrepare",prepare:t,reducer:r}},asyncThunk:e}}function pn({type:e,reducerName:t,createNotation:r},n,o){let i,a;if("reducer"in n){if(r&&!yn(n))throw new Error(L(17));i=n.reducer,a=n.prepare}else i=n;o.addCase(e,i).exposeCaseReducer(t,i).exposeAction(t,a?J(e,a):J(e))}function mn(e){return e._reducerDefinitionType==="asyncThunk"}function yn(e){return e._reducerDefinitionType==="reducerWithPrepare"}function gn({type:e,reducerName:t},r,n,o){if(!o)throw new Error(L(18));const{payloadCreator:i,fulfilled:a,pending:c,rejected:s,settled:u,options:l}=r,d=o(e,i,l);n.exposeAction(t,d),a&&n.addCase(d.fulfilled,a),c&&n.addCase(d.pending,c),s&&n.addCase(d.rejected,s),u&&n.addMatcher(d.settled,u),n.exposeCaseReducer(t,{fulfilled:a||ie,pending:c||ie,rejected:s||ie,settled:u||ie})}function ie(){}function L(e){return`Minified Redux Toolkit error #${e}; visit https://redux-toolkit.js.org/Errors?code=${e} for the full message or use the non-minified dev environment for full errors. `}const bn="http://localhost:3000",Ne="bytebank_token";class wn{getToken(){return localStorage.getItem(Ne)}setToken(t){localStorage.setItem(Ne,t)}clearToken(){localStorage.removeItem(Ne)}async request(t,r={}){const n=this.getToken(),o={"Content-Type":"application/json",...r.headers};n&&(o.Authorization=`Bearer ${n}`);const i=await fetch(`${bn}${t}`,{...r,headers:o});if(!i.ok){const a=await i.json().catch(()=>({}));throw new Error(a.message||"Erro na requisição")}return i.json()}async createUser(t){return this.request("/user",{method:"POST",body:JSON.stringify(t)})}async authenticate(t){const r=await this.request("/user/auth",{method:"POST",body:JSON.stringify(t)});return r.result.token&&this.setToken(r.result.token),r}logout(){this.clearToken()}decodeToken(t){try{const r=JSON.parse(atob(t.split(".")[1]));return{id:r.id,username:r.username,email:r.email}}catch{return null}}isTokenValid(){const t=this.getToken();if(!t)return!1;try{const r=JSON.parse(atob(t.split(".")[1]));return Date.now()<r.exp*1e3}catch{return!1}}async getAccount(){return this.request("/account")}async createTransaction(t){return this.request("/account/transaction",{method:"POST",body:JSON.stringify(t)})}async getStatement(t){return this.request(`/account/${t}/statement`)}}const M=new wn,B=class B{constructor(){H(this,"listeners");this.listeners=new Map,window.addEventListener("bytebank-event",t=>{this.handleEvent(t.detail)})}static getInstance(){return B.instance||(B.instance=new B),B.instance}handleEvent(t){const r=this.listeners.get(t.type);r==null||r.forEach(n=>{try{n(t)}catch(o){console.error(`Erro ao processar evento ${t.type}:`,o)}})}subscribe(t,r){return this.listeners.has(t)||this.listeners.set(t,new Set),this.listeners.get(t).add(r),()=>{var n;(n=this.listeners.get(t))==null||n.delete(r)}}emit(t,r,n="base"){const o={type:t,payload:r,source:n,timestamp:Date.now()};this.handleEvent(o),window.dispatchEvent(new CustomEvent("bytebank-event",{detail:o}))}emitAuthChange(t){this.emit("auth:change",{isAuthenticated:t},"base")}emitTransactionCreated(t){this.emit("transaction:created",{transactionId:t},"financeiro")}emitTransactionsUpdated(){this.emit("transactions:updated",{},"financeiro")}emitRefreshDashboard(){this.emit("dashboard:refresh",{},"dashboard")}emitNavigate(t){this.emit("navigate",{path:t},"base")}};H(B,"instance");let Ve=B;const $=Ve.getInstance(),vn={user:null,token:null,isAuthenticated:!1,isLoading:!1,error:null},Te=V("auth/login",async(e,{rejectWithValue:t})=>{try{const r=await M.authenticate(e),n=M.decodeToken(r.result.token);return $.emitAuthChange(!0),{user:n,token:r.result.token}}catch(r){return t(r.message)}}),Re=V("auth/register",async(e,{rejectWithValue:t})=>{try{return(await M.createUser(e)).result}catch(r){return t(r.message)}}),Ot=V("auth/logout",async()=>(M.logout(),$.emitAuthChange(!1),null)),It=V("auth/checkAuth",async()=>{if(!M.isTokenValid())return M.logout(),null;const e=M.getToken();if(!e)return null;const t=M.decodeToken(e);return t?{user:t,token:e}:null}),Lt=Qe({name:"auth",initialState:vn,reducers:{clearError:e=>{e.error=null},setUser:(e,t)=>{e.user=t.payload}},extraReducers:e=>{e.addCase(Te.pending,t=>{t.isLoading=!0,t.error=null}).addCase(Te.fulfilled,(t,r)=>{t.isLoading=!1,t.user=r.payload.user,t.token=r.payload.token,t.isAuthenticated=!0}).addCase(Te.rejected,(t,r)=>{t.isLoading=!1,t.error=r.payload}).addCase(Re.pending,t=>{t.isLoading=!0,t.error=null}).addCase(Re.fulfilled,t=>{t.isLoading=!1}).addCase(Re.rejected,(t,r)=>{t.isLoading=!1,t.error=r.payload}).addCase(Ot.fulfilled,t=>{t.user=null,t.token=null,t.isAuthenticated=!1}).addCase(It.fulfilled,(t,r)=>{r.payload?(t.user=r.payload.user,t.token=r.payload.token,t.isAuthenticated=!0):(t.user=null,t.token=null,t.isAuthenticated=!1)})}}),{clearError:Vn,setUser:Wn}=Lt.actions,_n=e=>e.auth.user,Sn=e=>e.auth.isAuthenticated,xn=Lt.reducer,Cn={accounts:[],cards:[],selectedAccount:null,balance:0,isLoading:!1,error:null},Pe=V("account/fetchAccount",async(e,{rejectWithValue:t})=>{try{const r=await M.getAccount(),n=r.result.transactions.reduce((o,i)=>o+i.value,0);return{...r.result,balance:n}}catch(r){return t(r.message)}}),Ft=Qe({name:"account",initialState:Cn,reducers:{clearError:e=>{e.error=null},selectAccount:(e,t)=>{const r=e.accounts.find(n=>n.id===t.payload);r&&(e.selectedAccount=r)},updateBalance:(e,t)=>{e.balance=t.payload},clearAccount:e=>{e.accounts=[],e.cards=[],e.selectedAccount=null,e.balance=0}},extraReducers:e=>{e.addCase(Pe.pending,t=>{t.isLoading=!0,t.error=null}).addCase(Pe.fulfilled,(t,r)=>{t.isLoading=!1,t.accounts=r.payload.account,t.cards=r.payload.cards,t.balance=r.payload.balance,r.payload.account.length>0&&!t.selectedAccount&&(t.selectedAccount=r.payload.account[0])}).addCase(Pe.rejected,(t,r)=>{t.isLoading=!1,t.error=r.payload})}}),{clearError:qn,selectAccount:Kn,updateBalance:Gn,clearAccount:Hn}=Ft.actions,En=e=>e.account.balance,kn=Ft.reducer,zt={type:"all",category:"all",startDate:null,endDate:null,searchTerm:""},An={transactions:[],filteredTransactions:[],isLoading:!1,error:null,filters:zt,pagination:{page:1,pageSize:10,totalItems:0,totalPages:0}},De=(e,t)=>e.filter(r=>{var n,o,i;if(t.type!=="all"&&r.type!==t.type||t.category!=="all"&&r.category!==t.category||t.startDate&&new Date(r.date)<new Date(t.startDate)||t.endDate&&new Date(r.date)>new Date(t.endDate))return!1;if(t.searchTerm){const a=t.searchTerm.toLowerCase(),c=(n=r.description)==null?void 0:n.toLowerCase().includes(a),s=(o=r.from)==null?void 0:o.toLowerCase().includes(a),u=(i=r.to)==null?void 0:i.toLowerCase().includes(a);if(!c&&!s&&!u)return!1}return!0}),Me=V("transactions/fetch",async(e,{rejectWithValue:t})=>{try{return(await M.getStatement(e)).result.transactions}catch(r){return t(r.message)}}),Oe=V("transactions/create",async(e,{rejectWithValue:t})=>{try{const r=await M.createTransaction(e);return $.emitTransactionCreated(r.id),$.emitTransactionsUpdated(),$.emitRefreshDashboard(),r}catch(r){return t(r.message)}}),jt=Qe({name:"transactions",initialState:An,reducers:{clearError:e=>{e.error=null},setFilters:(e,t)=>{e.filters={...e.filters,...t.payload},e.filteredTransactions=De(e.transactions,e.filters),e.pagination.totalItems=e.filteredTransactions.length,e.pagination.totalPages=Math.ceil(e.filteredTransactions.length/e.pagination.pageSize),e.pagination.page=1},clearFilters:e=>{e.filters=zt,e.filteredTransactions=e.transactions,e.pagination.totalItems=e.transactions.length,e.pagination.totalPages=Math.ceil(e.transactions.length/e.pagination.pageSize),e.pagination.page=1},setPage:(e,t)=>{e.pagination.page=t.payload}},extraReducers:e=>{e.addCase(Me.pending,t=>{t.isLoading=!0,t.error=null}).addCase(Me.fulfilled,(t,r)=>{t.isLoading=!1,t.transactions=r.payload,t.filteredTransactions=De(r.payload,t.filters),t.pagination.totalItems=t.filteredTransactions.length,t.pagination.totalPages=Math.ceil(t.filteredTransactions.length/t.pagination.pageSize)}).addCase(Me.rejected,(t,r)=>{t.isLoading=!1,t.error=r.payload}).addCase(Oe.pending,t=>{t.isLoading=!0}).addCase(Oe.fulfilled,(t,r)=>{t.isLoading=!1,t.transactions.unshift(r.payload),t.filteredTransactions=De(t.transactions,t.filters),t.pagination.totalItems=t.filteredTransactions.length,t.pagination.totalPages=Math.ceil(t.filteredTransactions.length/t.pagination.pageSize)}).addCase(Oe.rejected,(t,r)=>{t.isLoading=!1,t.error=r.payload})}}),{clearError:Xn,setFilters:Jn,clearFilters:Yn,setPage:Qn}=jt.actions,Nn=jt.reducer,Tn=vt({auth:xn,account:kn,transactions:Nn}),Bt=Yr({reducer:Tn,devTools:!0});window.__BYTEBANK_STORE__=Bt;const $t=()=>br(),q=_r;function Zn(e,t,r=[]){me(()=>{const n=$.subscribe(e,t);return()=>n()},[e,...r])}function eo(e,t){const[r,n]=ce(e);return me(()=>{const o=setTimeout(()=>n(e),t);return()=>clearTimeout(o)},[e,t]),r}function to(e="pt-BR",t="BRL"){return{format:K(n=>new Intl.NumberFormat(e,{style:"currency",currency:t}).format(n),[e,t])}}function ro(e="pt-BR"){const t=K(n=>(typeof n=="string"?new Date(n):n).toLocaleDateString(e),[e]),r=K(n=>(typeof n=="string"?new Date(n):n).toLocaleString(e),[e]);return{formatDate:t,formatDateTime:r}}function no(){const[e,t]=ce(!0),r=K(()=>t(n=>!n),[]);return{isVisible:e,toggle:r,setIsVisible:t}}function oo(){const e=q(r=>r.auth),t=$t();return{...e,dispatch:t}}function io(){return q(t=>t.account)}function ao(){return q(t=>t.transactions)}const Rn=We(({children:e,className:t="",variant:r="primary",size:n="md",isLoading:o=!1,fullWidth:i=!1,disabled:a,...c},s)=>{const u="inline-flex justify-center items-center font-semibold rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#47A138]",l={primary:"bg-[#47A138] hover:bg-white text-white hover:text-[#47A138] border-2 border-[#47A138]",secondary:"bg-transparent hover:bg-[#47A138] border-[3px] border-[#47A138] text-[#47A138] hover:text-white",dark:"bg-black hover:bg-transparent border-[3px] border-black text-white hover:text-black",outline:"bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50",danger:"bg-red-500 hover:bg-red-600 text-white border-2 border-red-500"},d={sm:"h-9 px-4 text-sm min-w-[120px]",md:"h-11 px-6 text-base min-w-[180px]",lg:"h-14 px-8 text-lg min-w-[200px]"};return E("button",{ref:s,className:`${u} ${l[r]} ${d[n]} ${i?"w-full":""} ${o||a?"opacity-50 cursor-not-allowed":""} ${t}`,disabled:a||o,...c,children:[o&&E("svg",{className:"animate-spin -ml-1 mr-2 h-4 w-4",fill:"none",viewBox:"0 0 24 24",children:[f("circle",{className:"opacity-25",cx:"12",cy:"12",r:"10",stroke:"currentColor",strokeWidth:"4"}),f("path",{className:"opacity-75",fill:"currentColor",d:"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"})]}),e]})});Rn.displayName="Button";const Pn=We(({className:e="",label:t,error:r,id:n,...o},i)=>{const a=n||`input-${Math.random().toString(36).substr(2,9)}`;return E("div",{className:"w-full",children:[t&&f("label",{htmlFor:a,className:"block text-sm font-medium text-gray-700 mb-2",children:t}),f("input",{ref:i,id:a,className:`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#47A138] focus:border-transparent ${r?"border-red-500":"border-gray-300"} ${e}`,...o}),r&&f("p",{className:"mt-1 text-sm text-red-500",children:r})]})});Pn.displayName="Input";const Dn=We(({className:e="",label:t,error:r,options:n,id:o,...i},a)=>{const c=o||`select-${Math.random().toString(36).substr(2,9)}`;return E("div",{className:"w-full",children:[t&&f("label",{htmlFor:c,className:"block text-sm font-medium text-gray-700 mb-2",children:t}),f("select",{ref:a,id:c,className:`w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#47A138] focus:border-transparent ${r?"border-red-500":"border-gray-300"} ${e}`,...i,children:n.map(s=>f("option",{value:s.value,children:s.label},s.value))}),r&&f("p",{className:"mt-1 text-sm text-red-500",children:r})]})});Dn.displayName="Select";const so=({isOpen:e,onClose:t,title:r,children:n,size:o="md"})=>{const i=Gt(null),a=K(u=>{u.key==="Escape"&&t()},[t]),c=K(u=>{u.target===u.currentTarget&&t()},[t]);return me(()=>(e&&(document.addEventListener("keydown",a),document.body.style.overflow="hidden"),()=>{document.removeEventListener("keydown",a),document.body.style.overflow="unset"}),[e,a]),e?f("div",{className:"fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn",onClick:c,role:"dialog","aria-modal":"true",children:E("div",{ref:i,className:`bg-white rounded-lg p-8 w-full mx-4 max-h-[90vh] overflow-y-auto animate-slideUp ${{sm:"max-w-sm",md:"max-w-md",lg:"max-w-lg",xl:"max-w-xl"}[o]}`,children:[r&&E("div",{className:"flex justify-between items-center mb-6",children:[f("h2",{className:"text-2xl font-semibold text-gray-900",children:r}),f("button",{onClick:t,className:"text-gray-400 hover:text-gray-600 transition text-xl","aria-label":"Fechar",children:"✕"})]}),n]})}):null},Mn=({value:e,isVisible:t=!0,className:r=""})=>{const n=o=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(o);return f("span",{className:`font-semibold ${r}`,children:t?n(e):"••••••"})},On=({isVisible:e,onToggle:t,className:r=""})=>f("button",{type:"button",onClick:t,className:`ml-2 p-1 hover:bg-[#e4e1e1] rounded transition ${r}`,"aria-label":e?"Ocultar saldo":"Mostrar saldo",children:e?E("svg",{xmlns:"http://www.w3.org/2000/svg",width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[f("path",{d:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"}),f("circle",{cx:"12",cy:"12",r:"3"})]}):E("svg",{xmlns:"http://www.w3.org/2000/svg",width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[f("path",{d:"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"}),f("line",{x1:"1",y1:"1",x2:"23",y2:"23"})]})}),In=()=>{var l;const e=$t(),t=q(Sn),r=q(_n),n=q(En),[o,i]=ce(!0),[a,c]=ce(!1);me(()=>{e(It())},[e]);const s=()=>{e(Ot()),c(!1)},u=d=>{window.history.pushState({},"",d),window.dispatchEvent(new PopStateEvent("popstate")),$.emitNavigate(d),c(!1)};return f("header",{className:"bg-black text-white sticky top-0 z-50",children:f("div",{className:"max-w-7xl mx-auto px-6",children:E("div",{className:"flex items-center justify-between h-16",children:[E("div",{className:"flex items-center gap-3 cursor-pointer",onClick:()=>u("/"),children:[f("div",{className:"w-10 h-10 bg-[#47A138] rounded-lg flex items-center justify-center",children:f("span",{className:"text-white font-bold text-xl",children:"B"})}),f("span",{className:"font-semibold text-lg hidden sm:block",children:"ByteBank"})]}),t&&E("nav",{className:"hidden md:flex items-center gap-6",children:[f("button",{onClick:()=>u("/dashboard"),className:"text-gray-300 hover:text-white transition",children:"Dashboard"}),f("button",{onClick:()=>u("/financeiro"),className:"text-gray-300 hover:text-white transition",children:"Financeiro"}),f("button",{onClick:()=>u("/extrato"),className:"text-gray-300 hover:text-white transition",children:"Extrato"})]}),f("div",{className:"flex items-center gap-4",children:t?E(Kt,{children:[E("div",{className:"hidden sm:flex items-center gap-2 bg-gray-900 px-4 py-2 rounded-lg",children:[f("span",{className:"text-gray-400 text-sm",children:"Saldo:"}),f(Mn,{value:n,isVisible:o,className:n>=0?"text-[#47A138]":"text-red-500"}),f(On,{isVisible:o,onToggle:()=>i(!o)})]}),E("div",{className:"relative",children:[E("button",{onClick:()=>c(!a),className:"flex items-center gap-2 hover:bg-gray-900 px-3 py-2 rounded-lg transition",children:[f("div",{className:"w-8 h-8 bg-[#47A138] rounded-full flex items-center justify-center",children:f("span",{className:"text-white text-sm font-medium",children:((l=r==null?void 0:r.username)==null?void 0:l.charAt(0).toUpperCase())||"U"})}),f("span",{className:"hidden md:block text-sm",children:r==null?void 0:r.username}),f("svg",{className:"w-4 h-4",fill:"none",stroke:"currentColor",viewBox:"0 0 24 24",children:f("path",{strokeLinecap:"round",strokeLinejoin:"round",strokeWidth:2,d:"M19 9l-7 7-7-7"})})]}),a&&E("div",{className:"absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 animate-fadeIn",children:[E("div",{className:"px-4 py-2 border-b",children:[f("p",{className:"text-sm font-medium text-gray-900",children:r==null?void 0:r.username}),f("p",{className:"text-xs text-gray-500",children:r==null?void 0:r.email})]}),f("button",{onClick:()=>u("/dashboard"),className:"md:hidden w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100",children:"Dashboard"}),f("button",{onClick:()=>u("/financeiro"),className:"md:hidden w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100",children:"Financeiro"}),f("button",{onClick:s,className:"w-full text-left px-4 py-2 text-red-600 hover:bg-red-50",children:"Sair"})]})]})]}):f("button",{onClick:()=>u("/login"),className:"btn-bytebank-primary text-sm h-9 min-w-[100px]",children:"Entrar"})})]})})})};var Ln=(e=>(e.SAQUE="Saque",e.PIX="PIX",e.TED="TED",e.DEPOSITO="Deposito",e.TRANSFERENCIA="Transferencia",e))(Ln||{});const co={alimentacao:{label:"Alimentação",icon:"🍽️",color:"#FF6B6B"},transporte:{label:"Transporte",icon:"🚗",color:"#4ECDC4"},moradia:{label:"Moradia",icon:"🏠",color:"#45B7D1"},saude:{label:"Saúde",icon:"💊",color:"#96CEB4"},educacao:{label:"Educação",icon:"📚",color:"#FFEAA7"},lazer:{label:"Lazer",icon:"🎮",color:"#DDA0DD"},compras:{label:"Compras",icon:"🛒",color:"#F39C12"},servicos:{label:"Serviços",icon:"🔧",color:"#9B59B6"},investimentos:{label:"Investimentos",icon:"📈",color:"#27AE60"},salario:{label:"Salário",icon:"💰",color:"#2ECC71"},freelance:{label:"Freelance",icon:"💼",color:"#3498DB"},outros:{label:"Outros",icon:"📌",color:"#95A5A6"}};console.log("🟢 @bytebank/base - Módulo carregado com sucesso!");const Fn=()=>(console.log("🟢 @bytebank/base - Renderizando Navbar..."),f(mr,{store:Bt,children:f(In,{})})),zn=Xt({React:pt,ReactDOM:Ht,rootComponent:Fn,domElementGetter:()=>document.getElementById("navbar")||document.body,errorBoundary(e,t,r){return console.error("❌ Erro no @bytebank/base:",e,t),f("div",{className:"text-red-500 p-4",children:"Erro ao carregar navbar"})}}),{bootstrap:lo,mount:uo,unmount:fo}=zn;export{Mn as BalanceCard,Rn as Button,co as CATEGORY_CONFIG,Pn as Input,so as Modal,Dn as Select,Ln as TipoTransacao,On as ToggleEyeButton,M as apiService,lo as bootstrap,Hn as clearAccount,qn as clearAccountError,Vn as clearAuthError,Yn as clearFilters,Xn as clearTransactionError,$ as eventBus,Te as login,Ot as logout,uo as mount,Kn as selectAccount,Jn as setFilters,Qn as setPage,Bt as store,fo as unmount,Gn as updateBalance,io as useAccount,$t as useAppDispatch,q as useAppSelector,oo as useAuth,no as useBalanceVisibility,to as useCurrencyFormatter,ro as useDateFormatter,eo as useDebounce,Zn as useMFEEvent,ao as useTransactions};
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */function R(){return R=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(e[a]=n[a])}return e},R.apply(this,arguments)}var C;(function(e){e.Pop="POP",e.Push="PUSH",e.Replace="REPLACE"})(C||(C={}));const F="popstate";function he(e){e===void 0&&(e={});function t(a,i){let{pathname:r,search:o,hash:l}=a.location;return z("",{pathname:r,search:o,hash:l},i.state&&i.state.usr||null,i.state&&i.state.key||"default")}function n(a,i){return typeof i=="string"?i:K(i)}return pe(t,n,null,e)}function v(e,t){if(e===!1||e===null||typeof e>"u")throw new Error(t)}function G(e,t){if(!e){typeof console<"u"&&console.warn(t);try{throw new Error(t)}catch{}}}function me(){return Math.random().toString(36).substr(2,8)}function V(e,t){return{usr:e.state,key:e.key,idx:t}}function z(e,t,n,a){return n===void 0&&(n=null),R({pathname:typeof e=="string"?e:e.pathname,search:"",hash:""},typeof t=="string"?S(t):t,{state:n,key:t&&t.key||a||me()})}function K(e){let{pathname:t="/",search:n="",hash:a=""}=e;return n&&n!=="?"&&(t+=n.charAt(0)==="?"?n:"?"+n),a&&a!=="#"&&(t+=a.charAt(0)==="#"?a:"#"+a),t}function S(e){let t={};if(e){let n=e.indexOf("#");n>=0&&(t.hash=e.substr(n),e=e.substr(0,n));let a=e.indexOf("?");a>=0&&(t.search=e.substr(a),e=e.substr(0,a)),e&&(t.pathname=e)}return t}function pe(e,t,n,a){a===void 0&&(a={});let{window:i=document.defaultView,v5Compat:r=!1}=a,o=i.history,l=C.Pop,s=null,h=u();h==null&&(h=0,o.replaceState(R({},o.state,{idx:h}),""));function u(){return(o.state||{idx:null}).idx}function c(){l=C.Pop;let m=u(),y=m==null?null:m-h;h=m,s&&s({action:l,location:g.location,delta:y})}function f(m,y){l=C.Push;let I=z(g.location,m,y);h=u()+1;let w=V(I,h),B=g.createHref(I);try{o.pushState(w,"",B)}catch(Z){if(Z instanceof DOMException&&Z.name==="DataCloneError")throw Z;i.location.assign(B)}r&&s&&s({action:l,location:g.location,delta:1})}function x(m,y){l=C.Replace;let I=z(g.location,m,y);h=u();let w=V(I,h),B=g.createHref(I);o.replaceState(w,"",B),r&&s&&s({action:l,location:g.location,delta:0})}function b(m){let y=i.location.origin!=="null"?i.location.origin:i.location.href,I=typeof m=="string"?m:K(m);return I=I.replace(/ $/,"%20"),v(y,"No window.location.(origin|href) available to create URL for href: "+I),new URL(I,y)}let g={get action(){return l},get location(){return e(i,o)},listen(m){if(s)throw new Error("A history only accepts one active listener");return i.addEventListener(F,c),s=m,()=>{i.removeEventListener(F,c),s=null}},createHref(m){return t(i,m)},createURL:b,encodeLocation(m){let y=b(m);return{pathname:y.pathname,search:y.search,hash:y.hash}},push:f,replace:x,go(m){return o.go(m)}};return g}var H;(function(e){e.data="data",e.deferred="deferred",e.redirect="redirect",e.error="error"})(H||(H={}));function fe(e,t,n){return n===void 0&&(n="/"),ge(e,t,n)}function ge(e,t,n,a){let i=typeof t=="string"?S(t):t,r=ne(i.pathname||"/",n);if(r==null)return null;let o=ee(e);ve(o);let l=null;for(let s=0;l==null&&s<o.length;++s){let h=Ne(r);l=Se(o[s],h)}return l}function ee(e,t,n,a){t===void 0&&(t=[]),n===void 0&&(n=[]),a===void 0&&(a="");let i=(r,o,l)=>{let s={relativePath:l===void 0?r.path||"":l,caseSensitive:r.caseSensitive===!0,childrenIndex:o,route:r};s.relativePath.startsWith("/")&&(v(s.relativePath.startsWith(a),'Absolute route path "'+s.relativePath+'" nested under path '+('"'+a+'" is not valid. An absolute child route path ')+"must start with the combined path of all its parent routes."),s.relativePath=s.relativePath.slice(a.length));let h=k([a,s.relativePath]),u=n.concat(s);r.children&&r.children.length>0&&(v(r.index!==!0,"Index routes must not have child routes. Please remove "+('all child routes from route path "'+h+'".')),ee(r.children,t,u,h)),!(r.path==null&&!r.index)&&t.push({path:h,score:Ee(h,r.index),routesMeta:u})};return e.forEach((r,o)=>{var l;if(r.path===""||!((l=r.path)!=null&&l.includes("?")))i(r,o);else for(let s of te(r.path))i(r,o,s)}),t}function te(e){let t=e.split("/");if(t.length===0)return[];let[n,...a]=t,i=n.endsWith("?"),r=n.replace(/\?$/,"");if(a.length===0)return i?[r,""]:[r];let o=te(a.join("/")),l=[];return l.push(...o.map(s=>s===""?r:[r,s].join("/"))),i&&l.push(...o),l.map(s=>e.startsWith("/")&&s===""?"/":s)}function ve(e){e.sort((t,n)=>t.score!==n.score?n.score-t.score:ke(t.routesMeta.map(a=>a.childrenIndex),n.routesMeta.map(a=>a.childrenIndex)))}const be=/^:[\w-]+$/,xe=3,ye=2,Ie=1,we=10,Ce=-2,_=e=>e==="*";function Ee(e,t){let n=e.split("/"),a=n.length;return n.some(_)&&(a+=Ce),t&&(a+=ye),n.filter(i=>!_(i)).reduce((i,r)=>i+(be.test(r)?xe:r===""?Ie:we),a)}function ke(e,t){return e.length===t.length&&e.slice(0,-1).every((a,i)=>a===t[i])?e[e.length-1]-t[t.length-1]:0}function Se(e,t,n){let{routesMeta:a}=e,i={},r="/",o=[];for(let l=0;l<a.length;++l){let s=a[l],h=l===a.length-1,u=r==="/"?t:t.slice(r.length)||"/",c=Pe({path:s.relativePath,caseSensitive:s.caseSensitive,end:h},u),f=s.route;if(!c)return null;Object.assign(i,c.params),o.push({params:i,pathname:k([r,c.pathname]),pathnameBase:je(k([r,c.pathnameBase])),route:f}),c.pathnameBase!=="/"&&(r=k([r,c.pathnameBase]))}return o}function Pe(e,t){typeof e=="string"&&(e={path:e,caseSensitive:!1,end:!0});let[n,a]=Re(e.path,e.caseSensitive,e.end),i=t.match(n);if(!i)return null;let r=i[0],o=r.replace(/(.)\/+$/,"$1"),l=i.slice(1);return{params:a.reduce((h,u,c)=>{let{paramName:f,isOptional:x}=u;if(f==="*"){let g=l[c]||"";o=r.slice(0,r.length-g.length).replace(/(.)\/+$/,"$1")}const b=l[c];return x&&!b?h[f]=void 0:h[f]=(b||"").replace(/%2F/g,"/"),h},{}),pathname:r,pathnameBase:o,pattern:e}}function Re(e,t,n){t===void 0&&(t=!1),n===void 0&&(n=!0),G(e==="*"||!e.endsWith("*")||e.endsWith("/*"),'Route path "'+e+'" will be treated as if it were '+('"'+e.replace(/\*$/,"/*")+'" because the `*` character must ')+"always follow a `/` in the pattern. To get rid of this warning, "+('please change the route path to "'+e.replace(/\*$/,"/*")+'".'));let a=[],i="^"+e.replace(/\/*\*?$/,"").replace(/^\/*/,"/").replace(/[\\.*+^${}|()[\]]/g,"\\$&").replace(/\/:([\w-]+)(\?)?/g,(o,l,s)=>(a.push({paramName:l,isOptional:s!=null}),s?"/?([^\\/]+)?":"/([^\\/]+)"));return e.endsWith("*")?(a.push({paramName:"*"}),i+=e==="*"||e==="/*"?"(.*)$":"(?:\\/(.+)|\\/*)$"):n?i+="\\/*$":e!==""&&e!=="/"&&(i+="(?:(?=\\/|$))"),[new RegExp(i,t?void 0:"i"),a]}function Ne(e){try{return e.split("/").map(t=>decodeURIComponent(t).replace(/\//g,"%2F")).join("/")}catch(t){return G(!1,'The URL path "'+e+'" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent '+("encoding ("+t+").")),e}}function ne(e,t){if(t==="/")return e;if(!e.toLowerCase().startsWith(t.toLowerCase()))return null;let n=t.endsWith("/")?t.length-1:t.length,a=e.charAt(n);return a&&a!=="/"?null:e.slice(n)||"/"}const Be=/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i,Le=e=>Be.test(e);function Me(e,t){t===void 0&&(t="/");let{pathname:n,search:a="",hash:i=""}=typeof e=="string"?S(e):e,r;if(n)if(Le(n))r=n;else{if(n.includes("//")){let o=n;n=n.replace(/\/\/+/g,"/"),G(!1,"Pathnames cannot have embedded double slashes - normalizing "+(o+" -> "+n))}n.startsWith("/")?r=Y(n.substring(1),"/"):r=Y(n,t)}else r=t;return{pathname:r,search:ze(a),hash:Oe(i)}}function Y(e,t){let n=t.replace(/\/+$/,"").split("/");return e.split("/").forEach(i=>{i===".."?n.length>1&&n.pop():i!=="."&&n.push(i)}),n.length>1?n.join("/"):"/"}function U(e,t,n,a){return"Cannot include a '"+e+"' character in a manually specified "+("`to."+t+"` field ["+JSON.stringify(a)+"].  Please separate it out to the ")+("`to."+n+"` field. Alternatively you may provide the full path as ")+'a string in <Link to="..."> and the router will parse it for you.'}function Ae(e){return e.filter((t,n)=>n===0||t.route.path&&t.route.path.length>0)}function Ze(e,t){let n=Ae(e);return t?n.map((a,i)=>i===n.length-1?a.pathname:a.pathnameBase):n.map(a=>a.pathnameBase)}function Ue(e,t,n,a){a===void 0&&(a=!1);let i;typeof e=="string"?i=S(e):(i=R({},e),v(!i.pathname||!i.pathname.includes("?"),U("?","pathname","search",i)),v(!i.pathname||!i.pathname.includes("#"),U("#","pathname","hash",i)),v(!i.search||!i.search.includes("#"),U("#","search","hash",i)));let r=e===""||i.pathname==="",o=r?"/":i.pathname,l;if(o==null)l=n;else{let c=t.length-1;if(!a&&o.startsWith("..")){let f=o.split("/");for(;f[0]==="..";)f.shift(),c-=1;i.pathname=f.join("/")}l=c>=0?t[c]:"/"}let s=Me(i,l),h=o&&o!=="/"&&o.endsWith("/"),u=(r||o===".")&&n.endsWith("/");return!s.pathname.endsWith("/")&&(h||u)&&(s.pathname+="/"),s}const k=e=>e.join("/").replace(/\/\/+/g,"/"),je=e=>e.replace(/\/+$/,"").replace(/^\/*/,"/"),ze=e=>!e||e==="?"?"":e.startsWith("?")?e:"?"+e,Oe=e=>!e||e==="#"?"":e.startsWith("#")?e:"#"+e;function Ge(e){return e!=null&&typeof e.status=="number"&&typeof e.statusText=="string"&&typeof e.internal=="boolean"&&"data"in e}const ae=["post","put","patch","delete"];new Set(ae);const De=["get",...ae];new Set(De);/**
+ * React Router v6.30.2
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */function N(){return N=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(e[a]=n[a])}return e},N.apply(this,arguments)}const D=d.createContext(null),$e=d.createContext(null),L=d.createContext(null),M=d.createContext(null),P=d.createContext({outlet:null,matches:[],isDataRoute:!1}),re=d.createContext(null);function A(){return d.useContext(M)!=null}function $(){return A()||v(!1),d.useContext(M).location}function ie(e){d.useContext(L).static||d.useLayoutEffect(e)}function W(){let{isDataRoute:e}=d.useContext(P);return e?et():We()}function We(){A()||v(!1);let e=d.useContext(D),{basename:t,future:n,navigator:a}=d.useContext(L),{matches:i}=d.useContext(P),{pathname:r}=$(),o=JSON.stringify(Ze(i,n.v7_relativeSplatPath)),l=d.useRef(!1);return ie(()=>{l.current=!0}),d.useCallback(function(h,u){if(u===void 0&&(u={}),!l.current)return;if(typeof h=="number"){a.go(h);return}let c=Ue(h,JSON.parse(o),r,u.relative==="path");e==null&&t!=="/"&&(c.pathname=c.pathname==="/"?t:k([t,c.pathname])),(u.replace?a.replace:a.push)(c,u.state,u)},[t,a,o,r,e])}function Te(e,t){return Fe(e,t)}function Fe(e,t,n,a){A()||v(!1);let{navigator:i}=d.useContext(L),{matches:r}=d.useContext(P),o=r[r.length-1],l=o?o.params:{};o&&o.pathname;let s=o?o.pathnameBase:"/";o&&o.route;let h=$(),u;if(t){var c;let m=typeof t=="string"?S(t):t;s==="/"||(c=m.pathname)!=null&&c.startsWith(s)||v(!1),u=m}else u=h;let f=u.pathname||"/",x=f;if(s!=="/"){let m=s.replace(/^\//,"").split("/");x="/"+f.replace(/^\//,"").split("/").slice(m.length).join("/")}let b=fe(e,{pathname:x}),g=Je(b&&b.map(m=>Object.assign({},m,{params:Object.assign({},l,m.params),pathname:k([s,i.encodeLocation?i.encodeLocation(m.pathname).pathname:m.pathname]),pathnameBase:m.pathnameBase==="/"?s:k([s,i.encodeLocation?i.encodeLocation(m.pathnameBase).pathname:m.pathnameBase])})),r,n,a);return t&&g?d.createElement(M.Provider,{value:{location:N({pathname:"/",search:"",hash:"",state:null,key:"default"},u),navigationType:C.Pop}},g):g}function Ve(){let e=Ke(),t=Ge(e)?e.status+" "+e.statusText:e instanceof Error?e.message:JSON.stringify(e),n=e instanceof Error?e.stack:null,i={padding:"0.5rem",backgroundColor:"rgba(200,200,200, 0.5)"};return d.createElement(d.Fragment,null,d.createElement("h2",null,"Unexpected Application Error!"),d.createElement("h3",{style:{fontStyle:"italic"}},t),n?d.createElement("pre",{style:i},n):null,null)}const He=d.createElement(Ve,null);class _e extends d.Component{constructor(t){super(t),this.state={location:t.location,revalidation:t.revalidation,error:t.error}}static getDerivedStateFromError(t){return{error:t}}static getDerivedStateFromProps(t,n){return n.location!==t.location||n.revalidation!=="idle"&&t.revalidation==="idle"?{error:t.error,location:t.location,revalidation:t.revalidation}:{error:t.error!==void 0?t.error:n.error,location:n.location,revalidation:t.revalidation||n.revalidation}}componentDidCatch(t,n){console.error("React Router caught the following error during render",t,n)}render(){return this.state.error!==void 0?d.createElement(P.Provider,{value:this.props.routeContext},d.createElement(re.Provider,{value:this.state.error,children:this.props.component})):this.props.children}}function Ye(e){let{routeContext:t,match:n,children:a}=e,i=d.useContext(D);return i&&i.static&&i.staticContext&&(n.route.errorElement||n.route.ErrorBoundary)&&(i.staticContext._deepestRenderedBoundaryId=n.route.id),d.createElement(P.Provider,{value:t},a)}function Je(e,t,n,a){var i;if(t===void 0&&(t=[]),n===void 0&&(n=null),a===void 0&&(a=null),e==null){var r;if(!n)return null;if(n.errors)e=n.matches;else if((r=a)!=null&&r.v7_partialHydration&&t.length===0&&!n.initialized&&n.matches.length>0)e=n.matches;else return null}let o=e,l=(i=n)==null?void 0:i.errors;if(l!=null){let u=o.findIndex(c=>c.route.id&&(l==null?void 0:l[c.route.id])!==void 0);u>=0||v(!1),o=o.slice(0,Math.min(o.length,u+1))}let s=!1,h=-1;if(n&&a&&a.v7_partialHydration)for(let u=0;u<o.length;u++){let c=o[u];if((c.route.HydrateFallback||c.route.hydrateFallbackElement)&&(h=u),c.route.id){let{loaderData:f,errors:x}=n,b=c.route.loader&&f[c.route.id]===void 0&&(!x||x[c.route.id]===void 0);if(c.route.lazy||b){s=!0,h>=0?o=o.slice(0,h+1):o=[o[0]];break}}}return o.reduceRight((u,c,f)=>{let x,b=!1,g=null,m=null;n&&(x=l&&c.route.id?l[c.route.id]:void 0,g=c.route.errorElement||He,s&&(h<0&&f===0?(tt("route-fallback"),b=!0,m=null):h===f&&(b=!0,m=c.route.hydrateFallbackElement||null)));let y=t.concat(o.slice(0,f+1)),I=()=>{let w;return x?w=g:b?w=m:c.route.Component?w=d.createElement(c.route.Component,null):c.route.element?w=c.route.element:w=u,d.createElement(Ye,{match:c,routeContext:{outlet:u,matches:y,isDataRoute:n!=null},children:w})};return n&&(c.route.ErrorBoundary||c.route.errorElement||f===0)?d.createElement(_e,{location:n.location,revalidation:n.revalidation,component:g,error:x,children:I(),routeContext:{outlet:null,matches:y,isDataRoute:!0}}):I()},null)}var oe=function(e){return e.UseBlocker="useBlocker",e.UseRevalidator="useRevalidator",e.UseNavigateStable="useNavigate",e}(oe||{}),le=function(e){return e.UseBlocker="useBlocker",e.UseLoaderData="useLoaderData",e.UseActionData="useActionData",e.UseRouteError="useRouteError",e.UseNavigation="useNavigation",e.UseRouteLoaderData="useRouteLoaderData",e.UseMatches="useMatches",e.UseRevalidator="useRevalidator",e.UseNavigateStable="useNavigate",e.UseRouteId="useRouteId",e}(le||{});function qe(e){let t=d.useContext(D);return t||v(!1),t}function Qe(e){let t=d.useContext($e);return t||v(!1),t}function Xe(e){let t=d.useContext(P);return t||v(!1),t}function se(e){let t=Xe(),n=t.matches[t.matches.length-1];return n.route.id||v(!1),n.route.id}function Ke(){var e;let t=d.useContext(re),n=Qe(),a=se();return t!==void 0?t:(e=n.errors)==null?void 0:e[a]}function et(){let{router:e}=qe(oe.UseNavigateStable),t=se(le.UseNavigateStable),n=d.useRef(!1);return ie(()=>{n.current=!0}),d.useCallback(function(i,r){r===void 0&&(r={}),n.current&&(typeof i=="number"?e.navigate(i):e.navigate(i,N({fromRouteId:t},r)))},[e,t])}const J={};function tt(e,t,n){J[e]||(J[e]=!0)}function nt(e,t){e==null||e.v7_startTransition,e==null||e.v7_relativeSplatPath}function ce(e){v(!1)}function at(e){let{basename:t="/",children:n=null,location:a,navigationType:i=C.Pop,navigator:r,static:o=!1,future:l}=e;A()&&v(!1);let s=t.replace(/^\/*/,"/"),h=d.useMemo(()=>({basename:s,navigator:r,static:o,future:N({v7_relativeSplatPath:!1},l)}),[s,l,r,o]);typeof a=="string"&&(a=S(a));let{pathname:u="/",search:c="",hash:f="",state:x=null,key:b="default"}=a,g=d.useMemo(()=>{let m=ne(u,s);return m==null?null:{location:{pathname:m,search:c,hash:f,state:x,key:b},navigationType:i}},[s,u,c,f,x,b,i]);return g==null?null:d.createElement(L.Provider,{value:h},d.createElement(M.Provider,{children:n,value:g}))}function rt(e){let{children:t,location:n}=e;return Te(O(t),n)}new Promise(()=>{});function O(e,t){t===void 0&&(t=[]);let n=[];return d.Children.forEach(e,(a,i)=>{if(!d.isValidElement(a))return;let r=[...t,i];if(a.type===d.Fragment){n.push.apply(n,O(a.props.children,r));return}a.type!==ce&&v(!1),!a.props.index||!a.props.children||v(!1);let o={id:a.props.id||r.join("-"),caseSensitive:a.props.caseSensitive,element:a.props.element,Component:a.props.Component,index:a.props.index,path:a.props.path,loader:a.props.loader,action:a.props.action,errorElement:a.props.errorElement,ErrorBoundary:a.props.ErrorBoundary,hasErrorBoundary:a.props.ErrorBoundary!=null||a.props.errorElement!=null,shouldRevalidate:a.props.shouldRevalidate,handle:a.props.handle,lazy:a.props.lazy};a.props.children&&(o.children=O(a.props.children,r)),n.push(o)}),n}/**
+ * React Router DOM v6.30.2
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */const it="6";try{window.__reactRouterVersion=it}catch{}const ot="startTransition",q=d[ot];function lt(e){let{basename:t,children:n,future:a,window:i}=e,r=d.useRef();r.current==null&&(r.current=he({window:i,v5Compat:!0}));let o=r.current,[l,s]=d.useState({action:o.action,location:o.location}),{v7_startTransition:h}=a||{},u=d.useCallback(c=>{h&&q?q(()=>s(c)):s(c)},[s,h]);return d.useLayoutEffect(()=>o.listen(u),[o,u]),d.useEffect(()=>nt(a),[a]),d.createElement(at,{basename:t,children:n,location:l.location,navigationType:l.action,navigator:o,future:a})}var Q;(function(e){e.UseScrollRestoration="useScrollRestoration",e.UseSubmit="useSubmit",e.UseSubmitFetcher="useSubmitFetcher",e.UseFetcher="useFetcher",e.useViewTransitionState="useViewTransitionState"})(Q||(Q={}));var X;(function(e){e.UseFetcher="useFetcher",e.UseFetchers="useFetchers",e.UseScrollRestoration="useScrollRestoration"})(X||(X={}));const st=[{id:1,imagemUrl:"conta-e-cartao-gratuitos.svg",titulo:"Conta e cartão gratuitos",descricao:"Isso mesmo, nossa conta é digital, sem custo fixo e mais que isso: sem tarifa de manutenção."},{id:2,imagemUrl:"saques-sem-custo.svg",titulo:"Saques sem custo",descricao:"Você pode sacar gratuitamente 4x por mês de qualquer Banco 24h em qualquer lugar do país."},{id:3,imagemUrl:"programa-de-pontos.svg",titulo:"Programa de pontos",descricao:"Você pode acumular pontos com suas compras no crédito sem pagar mensalidade!"},{id:4,imagemUrl:"seguro-dispositivos.svg",titulo:"Seguro dispositivos",descricao:"Seus dispositivos móveis (computador e laptop) protegidos por uma mensalidade simbólica."}],ct="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgOTAwIDQ1MCI+CiAgPHJlY3Qgd2lkdGg9IjkwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNlOWVjZWYiLz4KICA8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyOCIgZmlsbD0iIzAwNEQ2MSI+QmFubmVyIFBsYWNlaG9sZGVyPC90ZXh0Pgo8L3N2Zz4=",dt="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDc0IDU2Ij48cmVjdCB3aWR0aD0iNzQiIGhlaWdodD0iNTYiIGZpbGw9IiNmM2ZhZjciLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzQ3QTEzOCI+Q29udGE8L3RleHQ+PC9zdmc+",ut="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDc0IDU2Ij48cmVjdCB3aWR0aD0iNzQiIGhlaWdodD0iNTYiIGZpbGw9IiNmZmY3ZjYiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iI2ZmNmI2YiI+U2FxdWVzPC90ZXh0Pjwvc3ZnPg==",ht="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDc0IDU2Ij48cmVjdCB3aWR0aD0iNzQiIGhlaWdodD0iNTYiIGZpbGw9IiNmZmZhZjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iI2YzOWMxMiI+UG9udG9zPC90ZXh0Pjwvc3ZnPg==",mt="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NCIgaGVpZ2h0PSI1NiIgdmlld0JveD0iMCAwIDc0IDU2Ij48cmVjdCB3aWR0aD0iNzQiIGhlaWdodD0iNTYiIGZpbGw9IiNmMGY5ZmYiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzQ1YjdkMSI+U2VndXJvPC90ZXh0Pjwvc3ZnPg==";function pt(){const e=W();return p("div",{className:"flex flex-col bg-[#FFF]",children:p("div",{className:"bg-gradient-to-b from-[#004D61] to-[#FFF] pt-10 pb-23",children:E("div",{className:"container mx-auto",children:[E("div",{className:"grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-18 gap-14 p-5",children:[p("section",{children:p("div",{className:"flex items-center h-full",children:p("div",{children:p("h1",{className:"font-bold text-[33px] leading-[1.5em] lg:text-left md:text-center text-center",children:"Experimente mais liberdade no controle da sua vida financeira. Crie sua conta com a gente!"})})})}),p("section",{children:p("img",{className:"mx-auto max-w-full h-auto",src:ct,alt:"Banner",width:"900",height:"450"})})]}),p("div",{className:"sm:block md:block lg:hidden mb-18 pl-4 pr-4",children:E("div",{className:"flex gap-5 md:grid-cols-2",children:[p("button",{onClick:()=>e("/cadastro"),className:"inline-flex justify-center items-center h-14 text-center rounded-[8px] bg-[#000] hover:bg-[transparent] border-[3px] border-[#000] w-full font-semibold text-[#FFF] text-[19px] hover:text-[#000] transition duration-300","aria-label":"Abrir minha conta",children:"Abrir minha conta"}),p("button",{onClick:()=>e("/login"),className:"inline-flex justify-center items-center h-14 text-center rounded-[8px] bg-transparent hover:bg-[#000] border-[3px] border-[#000] w-full font-semibold text-[#000] hover:text-[#FFF] text-[19px] transition duration-300","aria-label":"Já tenho conta",children:"Já tenho conta"})]})}),E("div",{children:[p("h2",{className:"text-center font-bold text-[30px] mb-16",children:"Vantagens do nosso banco:"}),p("div",{className:"grid gap-14 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4",children:st.map(t=>E("section",{className:"text-center p-4",children:[p("figure",{children:p("img",{className:"mx-auto w-20 h-auto",src:t.imagemUrl==="conta-e-cartao-gratuitos.svg"?dt:t.imagemUrl==="saques-sem-custo.svg"?ut:t.imagemUrl==="programa-de-pontos.svg"?ht:t.imagemUrl==="seguro-dispositivos.svg"?mt:"",alt:t.titulo,width:"74",height:"56"})}),p("h3",{className:"font-bold text-[22px] text-[#47A138] mt-5 mb-5",children:t.titulo}),p("p",{className:"text-[#767676] text-[19px]",children:t.descricao})]},t.id))})]})]})})})}function ft(){return p(rt,{children:p(ce,{path:"/",element:p(pt,{})})})}function gt(){const e=W(),t=$();return j(()=>{const n=r=>{var o;(o=r.detail)!=null&&o.href&&e(r.detail.href)},a=()=>{e("/")},i=r=>{var o;(o=r.detail)!=null&&o.href&&e(r.detail.href)};return window.addEventListener("nav-click",n),window.addEventListener("logo-click",a),window.addEventListener("auth-click",i),()=>{window.removeEventListener("nav-click",n),window.removeEventListener("logo-click",a),window.removeEventListener("auth-click",i)}},[e]),j(()=>{const n=document.querySelector("bytebank-header");n==null||n.setActiveMenuItem(t.pathname)},[t.pathname]),null}function vt(){const e=W();return j(()=>{const t=n=>{var a;(a=n.detail)!=null&&a.href&&e(n.detail.href)};return window.addEventListener("service-click",t),()=>{window.removeEventListener("service-click",t)}},[e]),null}class bt extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"}),this.mobileMenuOpen=!1}static get observedAttributes(){return["logo-url","logo-small-url","show-auth-buttons"]}connectedCallback(){this.render(),this.setupEventListeners()}attributeChangedCallback(){this.render(),this.setupEventListeners()}getNavItems(){const t=this.querySelector('[slot="menu"]');if(t){const n=t.querySelectorAll("[data-menu-item]");if(n.length>0)return Array.from(n).map(a=>({name:a.getAttribute("data-label"),href:a.getAttribute("data-href")||"#"}))}return[{name:"Home",href:"/"},{name:"Dashboard",href:"/dashboard"},{name:"Financeiro",href:"/financeiro"},{name:"Para você",href:"/paravoce"}]}render(){const t=this.getAttribute("logo-url")||"logo-green.svg",n=this.getAttribute("logo-small-url")||"logo-small.svg",a=this.resolveAsset?this.resolveAsset(t):t,i=this.resolveAsset?this.resolveAsset(n):n,r=this.getAttribute("show-auth-buttons")!=="false",o=this.getNavItems();this.shadowRoot.innerHTML=`
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        header {
+          background: #000;
+          color: white;
+          padding: 1.25rem 0;
+          position: sticky;
+          top: 0;
+          z-index: 50;
+        }
+
+        .container {
+          width: 100%;
+          padding: 0 2.5rem;
+        }
+
+        .header-content {
+          display: flex;
+          width: 100%;
+        }
+
+        .main-section {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1.25rem;
+        }
+
+        /* NAVBAR SECTION */
+        .navbar-container {
+          order: 2;
+          flex: 1;
+        }
+
+        .navbar {
+          display: flex;
+          align-items: center;
+          justify-content: left;
+        }
+
+        /* Mobile Toggle */
+        .mobile-toggle {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0.5rem;
+        }
+
+        .hamburger-icon {
+          width: 2.25rem;
+          height: 2.25rem;
+          stroke: #47A138;
+          stroke-width: 2;
+        }
+
+        /* Desktop Menu */
+        .nav-links {
+          display: flex;
+          gap: 4rem;
+          list-style: none;
+          align-items: center;
+        }
+
+        .nav-link {
+          color: #47A138;
+          text-decoration: none;
+          font-size: 1.1875rem;
+          font-weight: 500;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+
+        .nav-link:hover {
+          text-decoration: underline;
+        }
+
+        .nav-link.active {
+          font-weight: 600;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+          display: none;
+          position: fixed;
+          top: 73px;
+          left: 0;
+          right: 0;
+          background: #000;
+          border-top: 1px solid rgba(71, 161, 56, 0.2);
+          padding: 1rem 2.5rem;
+          flex-direction: column;
+          gap: 0.5rem;
+          max-height: calc(100vh - 73px);
+          overflow-y: auto;
+          z-index: 40;
+        }
+
+        .mobile-menu.open {
+          display: flex;
+          animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .mobile-menu .nav-link {
+          display: block;
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(71, 161, 56, 0.1);
+        }
+
+        /* LOGO SECTION */
+        .logo-container {
+          order: 1;
+          flex-shrink: 0;
+        }
+
+        .logo-container a {
+          display: inline-block;
+          line-height: 0;
+        }
+
+        .logo-large {
+          display: block;
+          width: 170px;
+          height: 38px;
+          margin-right: 60px;
+        }
+
+        .logo-small {
+          display: none;
+          width: 45px;
+          height: 45px;
+        }
+
+        /* AUTH BUTTONS SECTION */
+        .auth-buttons {
+          display: flex;
+          gap: 1.25rem;
+          flex-shrink: 0;
+        }
+
+        .btn {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          height: 2.75rem;
+          text-align: center;
+          border-radius: 8px;
+          min-width: 180px;
+          font-size: 1rem;
+          font-weight: 600;
+          transition: all 0.3s;
+          text-decoration: none;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+
+        .btn-primary {
+          background: #47a138;
+          color: white;
+          border: none;
+        }
+
+        .btn-primary:hover {
+          background: #FFF;
+          color: #59b449;
+        }
+
+        .btn-secondary {
+          background: transparent;
+          border: 3px solid #47a138;
+          color: #47a138;
+        }
+
+        .btn-secondary:hover {
+          background: #47a138;
+          color: white;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1280px) {
+          .auth-buttons {
+            display: none;
+          }
+
+          .nav-links {
+            gap: 2.5rem;
+          }
+        }
+
+        @media (max-width: 1024px) {
+          .logo-large {
+            display: none;
+          }
+
+          .logo-small {
+            display: block;
+          }
+
+          .navbar-container {
+            order: 1;
+          }
+
+          .logo-container {
+            order: 2;
+          }
+
+          .nav-links {
+            gap: 2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .container {
+            padding: 0 1.5rem;
+          }
+
+          .logo-large {
+            display: block;
+            margin-right: 0;
+          }
+
+          .logo-small {
+            display: none;
+          }
+
+          .mobile-toggle {
+            display: block;
+          }
+
+          .nav-links {
+            display: none;
+          }
+
+          .mobile-menu {
+            padding: 1rem 1.5rem;
+          }
+        }
+
+        @media (max-width: 640px) {
+          header {
+            padding: 1rem 0;
+          }
+        }
+      </style>
+
+      <header>
+        <div class="container">
+          <div class="header-content">
+            <div class="main-section">
+              
+              <!-- NAVBAR -->
+              <div class="navbar-container">
+                <nav class="navbar">
+                  <!-- Mobile Toggle -->
+                  <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu">
+                    ${this.mobileMenuOpen?`
+                      <svg class="hamburger-icon" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    `:`
+                      <svg class="hamburger-icon" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                      </svg>
+                    `}
+                  </button>
+
+                  <!-- Desktop Links -->
+                  <ul class="nav-links">
+                    ${o.map(l=>`
+                      <li>
+                        <a href="${l.href}" class="nav-link" data-href="${l.href}">
+                          ${l.name}
+                        </a>
+                      </li>
+                    `).join("")}
+                  </ul>
+                </nav>
+              </div>
+
+              <!-- LOGO -->
+              <div class="logo-container">
+                <a href="/" aria-label="ByteBank - Página Inicial" id="logo-link">
+                  <img src="${a}" alt="Logo ByteBank" class="logo-large" />
+                  <img src="${i}" alt="Logo ByteBank - Small" class="logo-small" />
+                </a>
+              </div>
+            </div>
+
+            <!-- AUTH BUTTONS -->
+            ${r?`
+              <div class="auth-buttons">
+                <a href="/cadastro" class="btn btn-primary" data-auth="signup">
+                  Abrir minha conta
+                </a>
+                <a href="/login" class="btn btn-secondary" data-auth="login">
+                  Já tenho conta
+                </a>
+              </div>
+            `:""}
+          </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div class="mobile-menu ${this.mobileMenuOpen?"open":""}" id="mobile-menu">
+          ${o.map(l=>`
+            <a href="${l.href}" class="nav-link" data-href="${l.href}">
+              ${l.name}
+            </a>
+          `).join("")}
+          
+          ${r?`
+            <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+              <a href="/cadastro" class="btn btn-primary" style="width: 100%;" data-auth="signup">
+                Abrir minha conta
+              </a>
+              <a href="/login" class="btn btn-secondary" style="width: 100%;" data-auth="login">
+                Já tenho conta
+              </a>
+            </div>
+          `:""}
+        </div>
+      </header>
+    `}setupEventListeners(){const t=this.shadowRoot.getElementById("mobile-toggle");t==null||t.addEventListener("click",()=>{this.mobileMenuOpen=!this.mobileMenuOpen,this.render(),this.setupEventListeners(),this.dispatchEvent(new CustomEvent("menu-toggle",{bubbles:!0,composed:!0,detail:{isOpen:this.mobileMenuOpen}}))});const n=this.shadowRoot.getElementById("logo-link");n==null||n.addEventListener("click",r=>{r.preventDefault(),this.dispatchEvent(new CustomEvent("logo-click",{bubbles:!0,composed:!0}))}),this.shadowRoot.querySelectorAll(".nav-link").forEach(r=>{r.addEventListener("click",o=>{o.preventDefault();const l=r.getAttribute("data-href");this.dispatchEvent(new CustomEvent("nav-click",{bubbles:!0,composed:!0,detail:{href:l,label:r.textContent.trim()}})),this.mobileMenuOpen&&(this.mobileMenuOpen=!1,this.render(),this.setupEventListeners())})}),this.shadowRoot.querySelectorAll("[data-auth]").forEach(r=>{r.addEventListener("click",o=>{o.preventDefault();const l=r.getAttribute("data-auth"),s=r.getAttribute("href");this.dispatchEvent(new CustomEvent("auth-click",{bubbles:!0,composed:!0,detail:{action:l,href:s}})),this.mobileMenuOpen&&(this.mobileMenuOpen=!1,this.render(),this.setupEventListeners())})})}setActiveMenuItem(t){this.shadowRoot.querySelectorAll(".nav-link").forEach(a=>{const i=a.getAttribute("data-href")===t;a.classList.toggle("active",i)})}closeMenu(){this.mobileMenuOpen&&(this.mobileMenuOpen=!1,this.render(),this.setupEventListeners())}}customElements.get("bytebank-header")||(customElements.define("bytebank-header",bt),console.log("✅ ByteBank Header com Navbar integrado registrado!"));class xt extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"})}static get observedAttributes(){return["logo-url","asset-base"]}connectedCallback(){this.render(),this.setupEventListeners()}attributeChangedCallback(){this.render(),this.setupEventListeners()}get assetBase(){return this.getAttribute("asset-base")||""}resolveAsset(t){return t?t.startsWith("http")?t:`${this.assetBase}${t.startsWith("/")?"":"/"}${t}`:""}getServices(){return[{label:"Home",href:"/"},{label:"Dashboard",href:"/dashboard"},{label:"Financeiro",href:"/financeiro"},{label:"Para você",href:"/paravoce"}]}getContacts(){return[{text:"(11) 0800-000-0000"},{text:"meajuda@bytebank.com.br"},{text:"ouvidoria@bytebank.com.br"}]}getSocialLinks(){return[{name:"Instagram",href:"https://instagram.com",icon:"instagram.svg"},{name:"WhatsApp",href:"https://whatsapp.com",icon:"whatsapp.svg"},{name:"YouTube",href:"https://youtube.com",icon:"youtube.svg"}]}render(){const t=this.resolveAsset(this.getAttribute("logo-url")||"logo-white.svg"),n=this.getServices(),a=this.getContacts(),i=this.getSocialLinks();this.shadowRoot.innerHTML=`
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        footer {
+          background: #000;
+          color: white;
+          padding: 2.25rem 0;
+          font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .container {
+          max-width: 1620px;
+          margin: 0 auto;
+          padding: 0 1rem;
+        }
+
+        .grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1rem;
+        }
+
+        section {
+          display: flex;
+          flex-direction: column;
+        }
+
+        h4 {
+          margin-bottom: 1.25rem;
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: #47a138;
+        }
+
+        .title-footer {
+          text-align: left;
+        }
+
+        .services-list {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 1.3rem;
+        }
+
+        .service-link {
+          color: white;
+          text-decoration: none;
+          font-size: 1.13rem;
+          transition: color 0.3s;
+        }
+
+        .service-link:hover {
+          color: #47a138;
+        }
+
+        .contact-info {
+          font-size: 1.125rem;
+          margin-bottom: 0.75rem;
+          line-height: 1.8;
+        }
+
+        .logo-container {
+          display: flex;
+          margin-top: 0.75rem;
+          margin-bottom: 2rem;
+        }
+
+        .logo {
+          width: 180px;
+          height: 35px;
+        }
+
+        .social-list {
+          list-style: none;
+          display: flex;
+          align-items: center;
+          gap: 2.25rem;
+        }
+
+        .social-link {
+          display: inline-block;
+          transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+          transform: scale(1.1);
+        }
+
+        .social-icon {
+          width: 36px;
+          height: 36px;
+        }
+
+        .social-icon.youtube {
+          width: 38px;
+          height: 38px;
+        }
+
+        @media (min-width: 1024px) {
+          .grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          .logo-container,
+          .social-list {
+            justify-content: center;
+          }
+
+          .title-footer {
+            text-align: center;
+          }
+        }
+      </style>
+
+      <footer>
+        <div class="container">
+          <div class="grid">
+
+            <section>
+              <h4>Serviços</h4>
+              <ul class="services-list">
+                ${n.map(r=>`
+                  <li>
+                    <a
+                      href="${r.href}"
+                      class="service-link"
+                      data-service-href="${r.href}"
+                    >
+                      ${r.label}
+                    </a>
+                  </li>
+                `).join("")}
+              </ul>
+            </section>
+
+            <section>
+              <h4>Contato</h4>
+              ${a.map(r=>`
+                <p class="contact-info">${r.text}</p>
+              `).join("")}
+            </section>
+
+            <section>
+              <h4 class="title-footer">Desenvolvido por Bytebank</h4>
+
+              <figure class="logo-container">
+                <img
+                  src="${t}"
+                  alt="Logo Branco ByteBank"
+                  class="logo"
+                />
+              </figure>
+
+              <ul class="social-list">
+                ${i.map(r=>`
+                  <li>
+                    <a
+                      href="${r.href}"
+                      class="social-link"
+                      data-social-href="${r.href}"
+                      aria-label="${r.name}"
+                    >
+                      <img
+                        src="${this.resolveAsset(r.icon)}"
+                        alt="${r.name} icon"
+                        class="social-icon ${r.name.toLowerCase()}"
+                      />
+                    </a>
+                  </li>
+                `).join("")}
+              </ul>
+            </section>
+
+          </div>
+        </div>
+      </footer>
+    `}setupEventListeners(){this.shadowRoot.querySelectorAll("[data-service-href]").forEach(t=>{t.addEventListener("click",n=>{n.preventDefault(),this.dispatchEvent(new CustomEvent("service-click",{bubbles:!0,composed:!0,detail:{href:t.getAttribute("data-service-href"),label:t.textContent.trim()}}))})}),this.shadowRoot.querySelectorAll("[data-social-href]").forEach(t=>{t.addEventListener("click",()=>{window.open(t.getAttribute("data-social-href"),"_blank","noopener,noreferrer")})})}}customElements.get("bytebank-footer")||(customElements.define("bytebank-footer",xt),console.log("✅ ByteBank Footer agnóstico registrado!"));function yt(){return E(lt,{children:[p(gt,{}),p(vt,{}),E("div",{className:"flex flex-col min-h-screen",children:[p("bytebank-header",{id:"bytebank-header","logo-url":"logo-green.svg","logo-small-url":"logo-small.svg","show-auth-buttons":"true"}),p("main",{className:"flex-1",children:p(ft,{})}),p("bytebank-footer",{id:"bytebank-footer","logo-url":"logo-white.svg"}),p("script",{dangerouslySetInnerHTML:{__html:`
+          (function(){
+            try{
+              const base = window.__BYTEBANK_ASSET_BASE__ || 'http://localhost:9001';
+              const header = document.getElementById('bytebank-header');
+              const footer = document.getElementById('bytebank-footer');
+              if(header) header.setAttribute('asset-base', base);
+              if(footer) footer.setAttribute('asset-base', base);
+            }catch(e){console.warn('Failed to set asset-base for bytebank webcomponents', e)}
+          })();
+        `}})]})]})}const It=ue({React:T,ReactDOM:de,rootComponent:yt,errorBoundary(e,t,n){return console.error("❌ @bytebank/base error:",e,t),T.createElement("div",{style:{padding:16,color:"red"}},"Erro no módulo base")}}),{bootstrap:kt,mount:St,unmount:Pt}=It;export{kt as bootstrap,St as mount,Pt as unmount};

@@ -43,8 +43,10 @@ class ByteBankHeader extends HTMLElement {
   }
 
   render() {
-    const logoUrl = this.getAttribute('logo-url') || '/logo-green.svg';
-    const logoSmallUrl = this.getAttribute('logo-small-url') || '/logo-small.svg';
+    const rawLogo = this.getAttribute('logo-url') || 'logo-green.svg';
+    const rawLogoSmall = this.getAttribute('logo-small-url') || 'logo-small.svg';
+    const logoUrl = this.resolveAsset ? this.resolveAsset(rawLogo) : rawLogo;
+    const logoSmallUrl = this.resolveAsset ? this.resolveAsset(rawLogoSmall) : rawLogoSmall;
     const showAuthButtons = this.getAttribute('show-auth-buttons') !== 'false';
     const navItems = this.getNavItems();
 

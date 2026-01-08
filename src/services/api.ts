@@ -1,6 +1,6 @@
 import type { AuthRequest, AuthResponse, CreateUserRequest, CreateTransactionRequest, Transaction, User } from '../types';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = (window as any).__BYTEBANK_API_BASE__ || 'http://localhost:3000';
 const TOKEN_KEY = 'bytebank_token';
 
 class ApiService {

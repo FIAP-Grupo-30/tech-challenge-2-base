@@ -1,11 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import vantagensMock from '../data/vantagens.json';
+import banner from '../assets/banner-home.svg';
+import contaImg from '../assets/conta-e-cartao-gratuitos.svg';
+import saquesImg from '../assets/saques-sem-custo.svg';
+import pontosImg from '../assets/programa-de-pontos.svg';
+import seguroImg from '../assets/seguro-dispositivos.svg';
 
 export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#FFF]">
+    <div className="flex flex-col bg-[#FFF]">
       
       <div className="bg-gradient-to-b from-[#004D61] to-[#FFF] pt-10 pb-23">
         <div className="container mx-auto">
@@ -25,8 +30,8 @@ export default function Home() {
 
             <section>
               <img
-                className="mx-auto"
-                src="/banner-home.svg"
+                className="mx-auto max-w-full h-auto"
+                src={banner}
                 alt="Banner"
                 width="900"
                 height="450"
@@ -68,8 +73,13 @@ export default function Home() {
                 <section key={vantagem.id} className="text-center p-4">
                   <figure>
                     <img
-                      className="mx-auto"
-                      src={vantagem.imagemUrl}
+                      className="mx-auto w-20 h-auto"
+                      src={
+                        vantagem.imagemUrl === 'conta-e-cartao-gratuitos.svg' ? contaImg :
+                        vantagem.imagemUrl === 'saques-sem-custo.svg' ? saquesImg :
+                        vantagem.imagemUrl === 'programa-de-pontos.svg' ? pontosImg :
+                        vantagem.imagemUrl === 'seguro-dispositivos.svg' ? seguroImg : ''
+                      }
                       alt={vantagem.titulo}
                       width="74"
                       height="56"

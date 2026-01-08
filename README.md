@@ -398,6 +398,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expirado - fazer logout
+        
+        // Observações de integração
+        // - Este MFE consome `window.__BYTEBANK_API_BASE__` quando disponível para construir URLs de API.
+        // - O shell (`@bytebank/base`) é responsável pelo layout principal (incluindo `min-h-screen` no wrapper). Evite usar `min-h-screen` dentro de MFEs individuais para não quebrar o layout do shell.
       localStorage.removeItem('bytebank_token');
       window.dispatchEvent(new Event('bytebank-logout'));
     }
