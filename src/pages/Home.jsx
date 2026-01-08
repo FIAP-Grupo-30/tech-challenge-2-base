@@ -22,7 +22,7 @@ export default function Home() {
                 <div>
                   <h1 className="font-bold text-[33px] leading-[1.5em] lg:text-left md:text-center text-center">
                     Experimente mais liberdade no controle da sua vida
-                    financeira. Crie sua conta com a gente!
+                    financeira. Crie sua conta com a gente!!! 
                   </h1>
                 </div>
               </div>
