@@ -1,6 +1,6 @@
 import type { AuthRequest, AuthResponse, CreateUserRequest, CreateTransactionRequest, Transaction, User } from '../types';
 
-const API_BASE_URL = (window as any).__BYTEBANK_API_BASE__ || 'http://localhost:3000';
+const API_BASE_URL = (window as any).__BYTEBANK_API_BASE__ || 'https://tech-challenge-2-production.up.railway.app';
 const TOKEN_KEY = 'bytebank_token';
 
 class ApiService {

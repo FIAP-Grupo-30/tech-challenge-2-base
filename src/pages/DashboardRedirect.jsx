@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export default function DashboardRedirect() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    // If dashboard is a separate MFE mounted at /dashboard, navigate there
-    navigate('/dashboard', { replace: true });
-    // fallback: if external MFE is at a different origin, use window.location
-    // window.location.href = '/dashboard';
-  }, [navigate]);
+  // This component acts as a placeholder for the Dashboard MFE.
+  // When the route is /dashboard, this component renders nothing (null),
+  // leaving the DOM free (or ready) for the Dashboard MFE to mount 
+  // if configured via domElementGetter to mount inside the main layout.
   return null;
 }
