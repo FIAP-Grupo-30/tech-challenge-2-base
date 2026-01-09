@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
+import DashboardRedirect from './pages/DashboardRedirect';
 // import Produtos from './pages/Produtos';
 // import Sobre from './pages/Sobre';
 
@@ -12,6 +13,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="/dashboard" element={<DashboardRedirect />} />
       {/* <Route path="/produtos" element={<Produtos />} />
       <Route path="/sobre" element={<Sobre />} /> */}
     </Routes>
