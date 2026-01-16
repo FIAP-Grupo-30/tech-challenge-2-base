@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
@@ -27,10 +27,5 @@ export default defineConfig({
   },
   preview: {
     port: 9001,
-  },
-  resolve: {
-    alias: {
-      '@': '/src',
-    },
   },
 });
