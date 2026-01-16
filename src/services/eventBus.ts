@@ -8,7 +8,7 @@ class EventBus {
 
   private constructor() {
     this.listeners = new Map();
-    
+
     // Escuta eventos globais do window
     window.addEventListener('bytebank-event', ((event: CustomEvent<MFEEvent>) => {
       this.handleEvent(event.detail);
@@ -38,7 +38,7 @@ class EventBus {
       this.listeners.set(eventType, new Set());
     }
     this.listeners.get(eventType)!.add(handler as EventHandler);
-    
+
     // Retorna função para cancelar inscrição
     return () => {
       this.listeners.get(eventType)?.delete(handler as EventHandler);
@@ -52,10 +52,10 @@ class EventBus {
       source,
       timestamp: Date.now(),
     };
-    
+
     // Dispara localmente
     this.handleEvent(event);
-    
+
     // Dispara globalmente para outros MFEs
     window.dispatchEvent(new CustomEvent('bytebank-event', { detail: event }));
   }

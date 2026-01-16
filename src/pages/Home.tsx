@@ -26,8 +26,8 @@ export default function Home() {
               <div className="flex items-center h-full">
                 <div>
                   <h1 className="font-bold text-[33px] leading-[1.5em] lg:text-left md:text-center text-center">
-                    Experimente mais liberdade no controle da sua vida
-                    financeira. Crie sua conta com a gente!!!
+                    Experimente mais liberdade no controle da sua vida financeira. Crie sua conta
+                    com a gente!!!
                   </h1>
                 </div>
               </div>
@@ -67,9 +67,7 @@ export default function Home() {
 
           {/* VANTAGENS */}
           <div>
-            <h2 className="text-center font-bold text-[30px] mb-16">
-              Vantagens do nosso banco:
-            </h2>
+            <h2 className="text-center font-bold text-[30px] mb-16">Vantagens do nosso banco:</h2>
 
             <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
               {(vantagensMock as Vantagem[]).map((vantagem) => (
@@ -98,9 +96,7 @@ export default function Home() {
                     {vantagem.titulo}
                   </h3>
 
-                  <p className="text-[#767676] text-[19px]">
-                    {vantagem.descricao}
-                  </p>
+                  <p className="text-[#767676] text-[19px]">{vantagem.descricao}</p>
                 </section>
               ))}
             </div>

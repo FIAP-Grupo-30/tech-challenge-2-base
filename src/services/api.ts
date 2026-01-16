@@ -1,6 +1,14 @@
-import type { AuthRequest, AuthResponse, CreateUserRequest, CreateTransactionRequest, Transaction, User } from '../types';
+import type {
+  AuthRequest,
+  AuthResponse,
+  CreateUserRequest,
+  CreateTransactionRequest,
+  Transaction,
+  User,
+} from '../types';
+import { ENV } from '../config/env';
 
-const API_BASE_URL = (window as any).__BYTEBANK_API_BASE__ || 'https://tech-challenge-2-production.up.railway.app';
+const API_BASE_URL = ENV.API_BASE_URL;
 const TOKEN_KEY = 'bytebank_token';
 
 class ApiService {
@@ -38,11 +46,17 @@ class ApiService {
   }
 
   async createUser(data: CreateUserRequest) {
-    return this.request<{ message: string; result: User }>('/user', { method: 'POST', body: JSON.stringify(data) });
+    return this.request<{ message: string; result: User }>('/user', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   }
 
   async authenticate(data: AuthRequest): Promise<AuthResponse> {
-    const response = await this.request<AuthResponse>('/user/auth', { method: 'POST', body: JSON.stringify(data) });
+    const response = await this.request<AuthResponse>('/user/auth', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
     if (response.result.token) {
       this.setToken(response.result.token);
     }
@@ -85,7 +99,9 @@ class ApiService {
   }
 
   async getStatement(accountId: string) {
-    return this.request<{ message: string; result: { transactions: Transaction[] } }>(`/account/${accountId}/statement`);
+    return this.request<{ message: string; result: { transactions: Transaction[] } }>(
+      `/account/${accountId}/statement`
+    );
   }
 }
 

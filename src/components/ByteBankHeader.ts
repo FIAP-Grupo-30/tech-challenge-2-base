@@ -1,35 +1,43 @@
 // Componente Header + Navbar Agnóstico //
 
+interface NavItem {
+  name: string;
+  href: string;
+}
+
 class ByteBankHeader extends HTMLElement {
+  shadowRoot!: ShadowRoot;
+  mobileMenuOpen: boolean = false;
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.mobileMenuOpen = false;
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['logo-url', 'logo-small-url', 'show-auth-buttons'];
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     this.render();
     this.setupEventListeners();
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(): void {
     this.render();
     this.setupEventListeners();
   }
 
-  getNavItems() {
+  getNavItems(): NavItem[] {
     // Tentar pegar do slot
     const menuSlot = this.querySelector('[slot="menu"]');
     if (menuSlot) {
       const items = menuSlot.querySelectorAll('[data-menu-item]');
       if (items.length > 0) {
-        return Array.from(items).map(item => ({
-          name: item.getAttribute('data-label'),
-          href: item.getAttribute('data-href') || '#'
+        return Array.from(items).map((item) => ({
+          name: item.getAttribute('data-label') || '',
+          href: item.getAttribute('data-href') || '#',
         }));
       }
     }
@@ -42,11 +50,18 @@ class ByteBankHeader extends HTMLElement {
     ];
   }
 
-  render() {
+  resolveAsset(path: string | null): string {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    const assetBase = this.getAttribute('asset-base') || '';
+    return `${assetBase}${path.startsWith('/') ? '' : '/'}${path}`;
+  }
+
+  render(): void {
     const rawLogo = this.getAttribute('logo-url') || 'logo-green.svg';
     const rawLogoSmall = this.getAttribute('logo-small-url') || 'logo-small.svg';
-    const logoUrl = this.resolveAsset ? this.resolveAsset(rawLogo) : rawLogo;
-    const logoSmallUrl = this.resolveAsset ? this.resolveAsset(rawLogoSmall) : rawLogoSmall;
+    const logoUrl = this.resolveAsset(rawLogo);
+    const logoSmallUrl = this.resolveAsset(rawLogoSmall);
     const showAuthButtons = this.getAttribute('show-auth-buttons') !== 'false';
     const navItems = this.getNavItems();
 
@@ -323,26 +338,34 @@ class ByteBankHeader extends HTMLElement {
                 <nav class="navbar">
                   <!-- Mobile Toggle -->
                   <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu">
-                    ${this.mobileMenuOpen ? `
+                    ${
+                      this.mobileMenuOpen
+                        ? `
                       <svg class="hamburger-icon" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                       </svg>
-                    ` : `
+                    `
+                        : `
                       <svg class="hamburger-icon" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
                       </svg>
-                    `}
+                    `
+                    }
                   </button>
 
                   <!-- Desktop Links -->
                   <ul class="nav-links">
-                    ${navItems.map(item => `
+                    ${navItems
+                      .map(
+                        (item) => `
                       <li>
                         <a href="${item.href}" class="nav-link" data-href="${item.href}">
                           ${item.name}
                         </a>
                       </li>
-                    `).join('')}
+                    `
+                      )
+                      .join('')}
                   </ul>
                 </nav>
               </div>
@@ -357,7 +380,9 @@ class ByteBankHeader extends HTMLElement {
             </div>
 
             <!-- AUTH BUTTONS -->
-            ${showAuthButtons ? `
+            ${
+              showAuthButtons
+                ? `
               <div class="auth-buttons">
                 <a href="/cadastro" class="btn btn-primary" data-auth="signup">
                   Abrir minha conta
@@ -366,19 +391,27 @@ class ByteBankHeader extends HTMLElement {
                   Já tenho conta
                 </a>
               </div>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
         </div>
 
         <!-- MOBILE MENU -->
         <div class="mobile-menu ${this.mobileMenuOpen ? 'open' : ''}" id="mobile-menu">
-          ${navItems.map(item => `
+          ${navItems
+            .map(
+              (item) => `
             <a href="${item.href}" class="nav-link" data-href="${item.href}">
               ${item.name}
             </a>
-          `).join('')}
+          `
+            )
+            .join('')}
           
-          ${showAuthButtons ? `
+          ${
+            showAuthButtons
+              ? `
             <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
               <a href="/cadastro" class="btn btn-primary" style="width: 100%;" data-auth="signup">
                 Abrir minha conta
@@ -387,52 +420,60 @@ class ByteBankHeader extends HTMLElement {
                 Já tenho conta
               </a>
             </div>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       </header>
     `;
   }
 
-  setupEventListeners() {
+  setupEventListeners(): void {
     // Mobile Toggle
     const mobileToggle = this.shadowRoot.getElementById('mobile-toggle');
     mobileToggle?.addEventListener('click', () => {
       this.mobileMenuOpen = !this.mobileMenuOpen;
       this.render();
       this.setupEventListeners();
-      
-      this.dispatchEvent(new CustomEvent('menu-toggle', {
-        bubbles: true,
-        composed: true,
-        detail: { isOpen: this.mobileMenuOpen }
-      }));
+
+      this.dispatchEvent(
+        new CustomEvent('menu-toggle', {
+          bubbles: true,
+          composed: true,
+          detail: { isOpen: this.mobileMenuOpen },
+        })
+      );
     });
 
     // Logo Click
     const logoLink = this.shadowRoot.getElementById('logo-link');
-    logoLink?.addEventListener('click', (e) => {
+    logoLink?.addEventListener('click', (e: Event) => {
       e.preventDefault();
-      this.dispatchEvent(new CustomEvent('logo-click', {
-        bubbles: true,
-        composed: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent('logo-click', {
+          bubbles: true,
+          composed: true,
+        })
+      );
     });
 
     // Nav Links Click (Desktop e Mobile)
     const navLinks = this.shadowRoot.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (e: Event) => {
         e.preventDefault();
         const href = link.getAttribute('data-href');
-        
-        this.dispatchEvent(new CustomEvent('nav-click', {
-          bubbles: true,
-          composed: true,
-          detail: { 
-            href, 
-            label: link.textContent.trim() 
-          }
-        }));
+
+        this.dispatchEvent(
+          new CustomEvent('nav-click', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              href,
+              label: link.textContent?.trim() || '',
+            },
+          })
+        );
 
         // Fechar menu mobile
         if (this.mobileMenuOpen) {
@@ -445,17 +486,19 @@ class ByteBankHeader extends HTMLElement {
 
     // Auth Buttons Click
     const authButtons = this.shadowRoot.querySelectorAll('[data-auth]');
-    authButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
+    authButtons.forEach((btn) => {
+      btn.addEventListener('click', (e: Event) => {
         e.preventDefault();
         const action = btn.getAttribute('data-auth');
         const href = btn.getAttribute('href');
-        
-        this.dispatchEvent(new CustomEvent('auth-click', {
-          bubbles: true,
-          composed: true,
-          detail: { action, href }
-        }));
+
+        this.dispatchEvent(
+          new CustomEvent('auth-click', {
+            bubbles: true,
+            composed: true,
+            detail: { action, href },
+          })
+        );
 
         // Fechar menu mobile
         if (this.mobileMenuOpen) {
@@ -468,15 +511,15 @@ class ByteBankHeader extends HTMLElement {
   }
 
   // API Pública
-  setActiveMenuItem(href) {
+  setActiveMenuItem(href: string | null): void {
     const links = this.shadowRoot.querySelectorAll('.nav-link');
-    links.forEach(link => {
+    links.forEach((link) => {
       const isActive = link.getAttribute('data-href') === href;
       link.classList.toggle('active', isActive);
     });
   }
 
-  closeMenu() {
+  closeMenu(): void {
     if (this.mobileMenuOpen) {
       this.mobileMenuOpen = false;
       this.render();

@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../store/slices/authSlice';
-import {
-  selectAuth,
-  selectIsAuthenticated,
-} from '../store/slices/authSlice';
+import { selectAuth, selectIsAuthenticated } from '../store/slices/authSlice';
 import type { AppDispatch } from '../store';
 
 export default function Login() {

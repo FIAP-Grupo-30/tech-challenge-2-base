@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import type { TransactionState, Transaction, TransactionFilters, CreateTransactionRequest } from '../../types';
+import type {
+  TransactionState,
+  Transaction,
+  TransactionFilters,
+  CreateTransactionRequest,
+} from '../../types';
 import { apiService } from '../../services/api';
 import { eventBus } from '../../services/eventBus';
 
@@ -20,7 +25,10 @@ const initialState: TransactionState = {
   pagination: { page: 1, pageSize: 10, totalItems: 0, totalPages: 0 },
 };
 
-const filterTransactions = (transactions: Transaction[], filters: TransactionFilters): Transaction[] => {
+const filterTransactions = (
+  transactions: Transaction[],
+  filters: TransactionFilters
+): Transaction[] => {
   return transactions.filter((t) => {
     if (filters.type !== 'all' && t.type !== filters.type) return false;
     if (filters.category !== 'all' && t.category !== filters.category) return false;
@@ -75,14 +83,18 @@ const transactionSlice = createSlice({
       state.filters = { ...state.filters, ...action.payload };
       state.filteredTransactions = filterTransactions(state.transactions, state.filters);
       state.pagination.totalItems = state.filteredTransactions.length;
-      state.pagination.totalPages = Math.ceil(state.filteredTransactions.length / state.pagination.pageSize);
+      state.pagination.totalPages = Math.ceil(
+        state.filteredTransactions.length / state.pagination.pageSize
+      );
       state.pagination.page = 1;
     },
     clearFilters: (state) => {
       state.filters = initialFilters;
       state.filteredTransactions = state.transactions;
       state.pagination.totalItems = state.transactions.length;
-      state.pagination.totalPages = Math.ceil(state.transactions.length / state.pagination.pageSize);
+      state.pagination.totalPages = Math.ceil(
+        state.transactions.length / state.pagination.pageSize
+      );
       state.pagination.page = 1;
     },
     setPage: (state, action: PayloadAction<number>) => {
@@ -100,7 +112,9 @@ const transactionSlice = createSlice({
         state.transactions = action.payload;
         state.filteredTransactions = filterTransactions(action.payload, state.filters);
         state.pagination.totalItems = state.filteredTransactions.length;
-        state.pagination.totalPages = Math.ceil(state.filteredTransactions.length / state.pagination.pageSize);
+        state.pagination.totalPages = Math.ceil(
+          state.filteredTransactions.length / state.pagination.pageSize
+        );
       })
       .addCase(fetchTransactions.rejected, (state, action) => {
         state.isLoading = false;
@@ -114,7 +128,9 @@ const transactionSlice = createSlice({
         state.transactions.unshift(action.payload);
         state.filteredTransactions = filterTransactions(state.transactions, state.filters);
         state.pagination.totalItems = state.filteredTransactions.length;
-        state.pagination.totalPages = Math.ceil(state.filteredTransactions.length / state.pagination.pageSize);
+        state.pagination.totalPages = Math.ceil(
+          state.filteredTransactions.length / state.pagination.pageSize
+        );
       })
       .addCase(createTransaction.rejected, (state, action) => {
         state.isLoading = false;
@@ -126,10 +142,14 @@ const transactionSlice = createSlice({
 export const { clearError, setFilters, clearFilters, setPage } = transactionSlice.actions;
 
 // Seletores
-export const selectTransactions = (state: { transactions: TransactionState }) => state.transactions.transactions;
-export const selectFilteredTransactions = (state: { transactions: TransactionState }) => state.transactions.filteredTransactions;
-export const selectTransactionFilters = (state: { transactions: TransactionState }) => state.transactions.filters;
-export const selectPagination = (state: { transactions: TransactionState }) => state.transactions.pagination;
+export const selectTransactions = (state: { transactions: TransactionState }) =>
+  state.transactions.transactions;
+export const selectFilteredTransactions = (state: { transactions: TransactionState }) =>
+  state.transactions.filteredTransactions;
+export const selectTransactionFilters = (state: { transactions: TransactionState }) =>
+  state.transactions.filters;
+export const selectPagination = (state: { transactions: TransactionState }) =>
+  state.transactions.pagination;
 
 export const selectPaginatedTransactions = (state: { transactions: TransactionState }) => {
   const { filteredTransactions, pagination } = state.transactions;

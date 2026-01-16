@@ -71,7 +71,8 @@ export const { clearError, selectAccount, updateBalance, clearAccount } = accoun
 
 // Seletores
 export const selectAccountState = (state: { account: AccountState }) => state.account;
-export const selectSelectedAccount = (state: { account: AccountState }) => state.account.selectedAccount;
+export const selectSelectedAccount = (state: { account: AccountState }) =>
+  state.account.selectedAccount;
 export const selectBalance = (state: { account: AccountState }) => state.account.balance;
 
 export default accountSlice.reducer;

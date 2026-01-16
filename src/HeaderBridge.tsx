@@ -49,9 +49,9 @@ export default function HeaderBridge() {
 
   // 🔄 Sincronizar rota ativa no Header
   useEffect(() => {
-    const header = document.querySelector('bytebank-header');
-    if (header && 'setActiveMenuItem' in header) {
-      (header as any).setActiveMenuItem(location.pathname);
+    const header = document.querySelector('bytebank-header') as ByteBankHeaderElement | null;
+    if (header?.setActiveMenuItem) {
+      header.setActiveMenuItem(location.pathname);
     }
   }, [location.pathname]);
 

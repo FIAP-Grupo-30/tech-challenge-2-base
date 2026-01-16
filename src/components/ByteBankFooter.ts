@@ -1,21 +1,38 @@
 // Componente Footer Agnóstico //
 
+interface Service {
+  label: string;
+  href: string;
+}
+
+interface Contact {
+  text: string;
+}
+
+interface SocialLink {
+  name: string;
+  href: string;
+  icon: string;
+}
+
 class ByteBankFooter extends HTMLElement {
+  shadowRoot!: ShadowRoot;
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['logo-url', 'asset-base'];
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     this.render();
     this.setupEventListeners();
   }
 
-  attributeChangedCallback() {
+  attributeChangedCallback(): void {
     this.render();
     this.setupEventListeners();
   }
@@ -24,11 +41,11 @@ class ByteBankFooter extends HTMLElement {
   // ASSET RESOLUTION (MF SAFE)
   // ===============================
 
-  get assetBase() {
+  get assetBase(): string {
     return this.getAttribute('asset-base') || '';
   }
 
-  resolveAsset(path) {
+  resolveAsset(path: string | null): string {
     if (!path) return '';
     if (path.startsWith('http')) return path;
     return `${this.assetBase}${path.startsWith('/') ? '' : '/'}${path}`;
@@ -38,7 +55,7 @@ class ByteBankFooter extends HTMLElement {
   // DATA
   // ===============================
 
-  getServices() {
+  getServices(): Service[] {
     return [
       { label: 'Home', href: '/' },
       { label: 'Dashboard', href: '/dashboard' },
@@ -47,7 +64,7 @@ class ByteBankFooter extends HTMLElement {
     ];
   }
 
-  getContacts() {
+  getContacts(): Contact[] {
     return [
       { text: '(11) 0800-000-0000' },
       { text: 'meajuda@bytebank.com.br' },
@@ -55,7 +72,7 @@ class ByteBankFooter extends HTMLElement {
     ];
   }
 
-  getSocialLinks() {
+  getSocialLinks(): SocialLink[] {
     return [
       { name: 'Instagram', href: 'https://instagram.com', icon: 'instagram.svg' },
       { name: 'WhatsApp', href: 'https://whatsapp.com', icon: 'whatsapp.svg' },
@@ -67,10 +84,8 @@ class ByteBankFooter extends HTMLElement {
   // RENDER
   // ===============================
 
-  render() {
-    const logoUrl = this.resolveAsset(
-      this.getAttribute('logo-url') || 'logo-white.svg'
-    );
+  render(): void {
+    const logoUrl = this.resolveAsset(this.getAttribute('logo-url') || 'logo-white.svg');
 
     const services = this.getServices();
     const contacts = this.getContacts();
@@ -206,7 +221,7 @@ class ByteBankFooter extends HTMLElement {
               <ul class="services-list">
                 ${services
                   .map(
-                    service => `
+                    (service) => `
                   <li>
                     <a
                       href="${service.href}"
@@ -226,7 +241,7 @@ class ByteBankFooter extends HTMLElement {
               <h4>Contato</h4>
               ${contacts
                 .map(
-                  contact => `
+                  (contact) => `
                 <p class="contact-info">${contact.text}</p>
               `
                 )
@@ -247,7 +262,7 @@ class ByteBankFooter extends HTMLElement {
               <ul class="social-list">
                 ${socialLinks
                   .map(
-                    social => `
+                    (social) => `
                   <li>
                     <a
                       href="${social.href}"
@@ -278,30 +293,30 @@ class ByteBankFooter extends HTMLElement {
   // EVENTS
   // ===============================
 
-  setupEventListeners() {
-    this.shadowRoot.querySelectorAll('[data-service-href]').forEach(link => {
-      link.addEventListener('click', e => {
+  setupEventListeners(): void {
+    this.shadowRoot.querySelectorAll('[data-service-href]').forEach((link) => {
+      link.addEventListener('click', (e: Event) => {
         e.preventDefault();
+        const target = e.target as HTMLElement;
         this.dispatchEvent(
           new CustomEvent('service-click', {
             bubbles: true,
             composed: true,
             detail: {
-              href: link.getAttribute('data-service-href'),
-              label: link.textContent.trim(),
+              href: target.getAttribute('data-service-href'),
+              label: target.textContent?.trim() || '',
             },
           })
         );
       });
     });
 
-    this.shadowRoot.querySelectorAll('[data-social-href]').forEach(link => {
+    this.shadowRoot.querySelectorAll('[data-social-href]').forEach((link) => {
       link.addEventListener('click', () => {
-        window.open(
-          link.getAttribute('data-social-href'),
-          '_blank',
-          'noopener,noreferrer'
-        );
+        const href = link.getAttribute('data-social-href');
+        if (href) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        }
       });
     });
   }

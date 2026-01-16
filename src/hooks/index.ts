@@ -23,36 +23,45 @@ export function useMFEEvent<T = unknown>(
 // Hook de debounce
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedValue(value), delay);
     return () => clearTimeout(timer);
   }, [value, delay]);
-  
+
   return debouncedValue;
 }
 
 // Hook para formatação de moeda
 export function useCurrencyFormatter(locale = 'pt-BR', currency = 'BRL') {
-  const format = useCallback((value: number) => {
-    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
-  }, [locale, currency]);
-  
+  const format = useCallback(
+    (value: number) => {
+      return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
+    },
+    [locale, currency]
+  );
+
   return { format };
 }
 
 // Hook para formatação de data
 export function useDateFormatter(locale = 'pt-BR') {
-  const formatDate = useCallback((date: string | Date) => {
-    const d = typeof date === 'string' ? new Date(date) : date;
-    return d.toLocaleDateString(locale);
-  }, [locale]);
-  
-  const formatDateTime = useCallback((date: string | Date) => {
-    const d = typeof date === 'string' ? new Date(date) : date;
-    return d.toLocaleString(locale);
-  }, [locale]);
-  
+  const formatDate = useCallback(
+    (date: string | Date) => {
+      const d = typeof date === 'string' ? new Date(date) : date;
+      return d.toLocaleDateString(locale);
+    },
+    [locale]
+  );
+
+  const formatDateTime = useCallback(
+    (date: string | Date) => {
+      const d = typeof date === 'string' ? new Date(date) : date;
+      return d.toLocaleString(locale);
+    },
+    [locale]
+  );
+
   return { formatDate, formatDateTime };
 }
 
