@@ -1,14 +1,27 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+interface NavClickEvent extends CustomEvent {
+  detail?: {
+    href: string;
+  };
+}
+
+interface AuthClickEvent extends CustomEvent {
+  detail?: {
+    href: string;
+  };
+}
+
 export default function HeaderBridge() {
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const onNavClick = (e) => {
-      if (e.detail?.href) {
-        navigate(e.detail.href);
+    const onNavClick = (e: Event) => {
+      const event = e as NavClickEvent;
+      if (event.detail?.href) {
+        navigate(event.detail.href);
       }
     };
 
@@ -16,9 +29,10 @@ export default function HeaderBridge() {
       navigate('/');
     };
 
-    const onAuthClick = (e) => {
-      if (e.detail?.href) {
-        navigate(e.detail.href);
+    const onAuthClick = (e: Event) => {
+      const event = e as AuthClickEvent;
+      if (event.detail?.href) {
+        navigate(event.detail.href);
       }
     };
 
@@ -36,7 +50,9 @@ export default function HeaderBridge() {
   // 🔄 Sincronizar rota ativa no Header
   useEffect(() => {
     const header = document.querySelector('bytebank-header');
-    header?.setActiveMenuItem(location.pathname);
+    if (header && 'setActiveMenuItem' in header) {
+      (header as any).setActiveMenuItem(location.pathname);
+    }
   }, [location.pathname]);
 
   return null;

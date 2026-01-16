@@ -1,13 +1,20 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+interface ServiceClickEvent extends CustomEvent {
+  detail?: {
+    href: string;
+  };
+}
+
 export default function FooterBridge() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const onServiceClick = (e) => {
-      if (e.detail?.href) {
-        navigate(e.detail.href);
+    const onServiceClick = (e: Event) => {
+      const event = e as ServiceClickEvent;
+      if (event.detail?.href) {
+        navigate(event.detail.href);
       }
     };
 

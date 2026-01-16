@@ -15,7 +15,6 @@ function App() {
       <FooterBridge />
 
       <div className="flex flex-col min-h-screen">
-
         <bytebank-header
           id="bytebank-header"
           logo-url="logo-green.svg"
@@ -29,7 +28,9 @@ function App() {
 
         <bytebank-footer id="bytebank-footer" logo-url="logo-white.svg" />
 
-        <script dangerouslySetInnerHTML={{__html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
           (function(){
             try{
               const base = window.__BYTEBANK_ASSET_BASE__ || 'http://localhost:9001';
@@ -39,8 +40,9 @@ function App() {
               if(footer) footer.setAttribute('asset-base', base);
             }catch(e){console.warn('Failed to set asset-base for bytebank webcomponents', e)}
           })();
-        `}} />
-
+        `,
+          }}
+        />
       </div>
     </BrowserRouter>
   );

@@ -6,15 +6,20 @@ import saquesImg from '../assets/saques-sem-custo.svg';
 import pontosImg from '../assets/programa-de-pontos.svg';
 import seguroImg from '../assets/seguro-dispositivos.svg';
 
+interface Vantagem {
+  id: number;
+  titulo: string;
+  descricao: string;
+  imagemUrl: string;
+}
+
 export default function Home() {
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col bg-[#FFF]">
-      
       <div className="bg-gradient-to-b from-[#004D61] to-[#FFF] pt-10 pb-23">
         <div className="container mx-auto">
-
           {/* BANNER */}
           <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-18 gap-14 p-5">
             <section>
@@ -22,7 +27,7 @@ export default function Home() {
                 <div>
                   <h1 className="font-bold text-[33px] leading-[1.5em] lg:text-left md:text-center text-center">
                     Experimente mais liberdade no controle da sua vida
-                    financeira. Crie sua conta com a gente!!! 
+                    financeira. Crie sua conta com a gente!!!
                   </h1>
                 </div>
               </div>
@@ -42,7 +47,6 @@ export default function Home() {
           {/* CTA MOBILE */}
           <div className="sm:block md:block lg:hidden mb-18 pl-4 pr-4">
             <div className="flex gap-5 md:grid-cols-2">
-              
               <button
                 onClick={() => navigate('/cadastro')}
                 className="inline-flex justify-center items-center h-14 text-center rounded-[8px] bg-[#000] hover:bg-[transparent] border-[3px] border-[#000] w-full font-semibold text-[#FFF] text-[19px] hover:text-[#000] transition duration-300"
@@ -58,7 +62,6 @@ export default function Home() {
               >
                 Já tenho conta
               </button>
-
             </div>
           </div>
 
@@ -69,16 +72,21 @@ export default function Home() {
             </h2>
 
             <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-              {vantagensMock.map((vantagem) => (
+              {(vantagensMock as Vantagem[]).map((vantagem) => (
                 <section key={vantagem.id} className="text-center p-4">
                   <figure>
                     <img
                       className="mx-auto w-20 h-auto"
                       src={
-                        vantagem.imagemUrl === 'conta-e-cartao-gratuitos.svg' ? contaImg :
-                        vantagem.imagemUrl === 'saques-sem-custo.svg' ? saquesImg :
-                        vantagem.imagemUrl === 'programa-de-pontos.svg' ? pontosImg :
-                        vantagem.imagemUrl === 'seguro-dispositivos.svg' ? seguroImg : ''
+                        vantagem.imagemUrl === 'conta-e-cartao-gratuitos.svg'
+                          ? contaImg
+                          : vantagem.imagemUrl === 'saques-sem-custo.svg'
+                            ? saquesImg
+                            : vantagem.imagemUrl === 'programa-de-pontos.svg'
+                              ? pontosImg
+                              : vantagem.imagemUrl === 'seguro-dispositivos.svg'
+                                ? seguroImg
+                                : ''
                       }
                       alt={vantagem.titulo}
                       width="74"
@@ -97,7 +105,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </div>
