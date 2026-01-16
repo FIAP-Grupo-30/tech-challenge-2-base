@@ -1,7 +1,7 @@
-export { default as ByteBankHeader } from './ByteBankHeader';
-export { default as ByteBankFooter } from './ByteBankFooter';
+export { default as ByteBankHeader } from "./ByteBankHeader";
+export { default as ByteBankFooter } from "./ByteBankFooter";
 
-import './ByteBankHeader';
-import './ByteBankFooter';
+import "./ByteBankHeader";
+import "./ByteBankFooter";
 
-console.log('✅ @bytebank/components carregados!');
+console.log("✅ @bytebank/components carregados!");
