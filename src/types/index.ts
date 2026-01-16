@@ -76,11 +76,23 @@ export interface CreateTransactionRequest {
 }
 
 export type TransactionCategory =
-  | 'alimentacao' | 'transporte' | 'moradia' | 'saude'
-  | 'educacao' | 'lazer' | 'compras' | 'servicos'
-  | 'investimentos' | 'salario' | 'freelance' | 'outros';
+  | 'alimentacao'
+  | 'transporte'
+  | 'moradia'
+  | 'saude'
+  | 'educacao'
+  | 'lazer'
+  | 'compras'
+  | 'servicos'
+  | 'investimentos'
+  | 'salario'
+  | 'freelance'
+  | 'outros';
 
-export const CATEGORY_CONFIG: Record<TransactionCategory, { label: string; icon: string; color: string }> = {
+export const CATEGORY_CONFIG: Record<
+  TransactionCategory,
+  { label: string; icon: string; color: string }
+> = {
   alimentacao: { label: 'Alimentação', icon: '🍽️', color: '#FF6B6B' },
   transporte: { label: 'Transporte', icon: '🚗', color: '#4ECDC4' },
   moradia: { label: 'Moradia', icon: '🏠', color: '#45B7D1' },
@@ -126,7 +138,12 @@ export interface TransactionState {
   isLoading: boolean;
   error: string | null;
   filters: TransactionFilters;
-  pagination: { page: number; pageSize: number; totalItems: number; totalPages: number };
+  pagination: {
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+  };
 }
 
 // Evento para comunicação entre microfrontends
