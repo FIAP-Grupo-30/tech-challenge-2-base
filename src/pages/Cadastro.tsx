@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useStore from "@bytebank/root/bytebank-store";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../store/slices/authSlice";
-import { selectAuth, selectIsAuthenticated } from "../store/slices/authSlice";
-import type { AppDispatch } from "../store";
 
 export default function Cadastro() {
-	const dispatch = useDispatch<AppDispatch>();
-	const auth = useSelector(selectAuth);
-	const isAuthenticated = useSelector(selectIsAuthenticated);
+	const auth = useStore(
+		(state) =>
+			state?.auth ?? {
+				user: null,
+				token: null,
+				isAuthenticated: false,
+				isLoading: false,
+				error: null,
+			},
+	);
+	const register = useStore((state) => state?.register);
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
@@ -16,20 +22,20 @@ export default function Cadastro() {
 	const [password, setPassword] = useState("");
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (auth?.isAuthenticated) {
 			navigate("/dashboard");
 		}
-	}, [isAuthenticated, navigate]);
+	}, [auth?.isAuthenticated, navigate]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			await dispatch(register({ username, email, password })).unwrap();
+			await register({ username, email, password });
 			// after successful register, user can login manually or we could auto-login
 			// here we'll navigate to login so user can authenticate
 			navigate("/login");
 		} catch (err) {
-			// handled in slice
+			// handled in store
 		}
 	};
 
@@ -59,13 +65,13 @@ export default function Cadastro() {
 				/>
 				<button
 					type="submit"
-					disabled={auth.isLoading}
+					disabled={auth?.isLoading}
 					className="bg-green-500 text-white p-2 rounded"
 				>
-					{auth.isLoading ? "Enviando..." : "Criar conta"}
+					{auth?.isLoading ? "Enviando..." : "Criar conta"}
 				</button>
 			</form>
-			{auth.error && <p className="text-red-500 mt-2">{auth.error}</p>}
+			{auth?.error && <p className="text-red-500 mt-2">{auth.error}</p>}
 		</div>
 	);
 }

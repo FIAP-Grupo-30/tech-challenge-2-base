@@ -2,9 +2,9 @@
 
 ## 📋 Visão Geral
 
-O **@bytebank/base** é o microfrontend de infraestrutura compartilhada do ByteBank. Ele fornece componentes, serviços, hooks e estado global (Redux) que são utilizados por todos os outros microfrontends da aplicação.
+O **@bytebank/base** é o microfrontend de infraestrutura compartilhada do ByteBank. Ele fornece componentes, serviços e hooks que são utilizados por todos os outros microfrontends da aplicação.
 
-Este MFE está **sempre ativo** em todas as rotas, funcionando como a camada de apresentação global e gerenciamento de estado centralizado.
+Este MFE está **sempre ativo** em todas as rotas, funcionando como a camada de apresentação global.
 
 ## 🎯 Responsabilidades
 
@@ -12,10 +12,11 @@ Este MFE está **sempre ativo** em todas as rotas, funcionando como a camada de 
 - **Header/Footer**: Componentes web (Web Components) sempre visíveis
 - Componentes UI reutilizáveis (futuros: Modal, Toast, Spinner, etc.)
 
-### 2. **Gerenciamento de Estado (Redux)**
-- **Auth Slice**: Autenticação e autorização do usuário
-- **Account Slice**: Dados da conta bancária selecionada
-- **Transaction Slice**: Transações financeiras com filtros e paginação
+### 2. **Integração com Store Global (Zustand)**
+- Acessa a store Zustand do `@bytebank/root` via Module Federation
+- **Auth**: Autenticação e autorização do usuário
+- **Account**: Dados da conta bancária selecionada
+- **Transactions**: Transações financeiras com filtros e paginação
 
 ### 3. **Serviços Compartilhados**
 - **API Service**: Cliente HTTP configurado para comunicação com backend
@@ -23,7 +24,7 @@ Este MFE está **sempre ativo** em todas as rotas, funcionando como a camada de 
 
 ### 4. **Hooks Personalizados**
 - Lógica reutilizável encapsulada
-- Acesso facilitado ao Redux Store
+- Acesso facilitado à store Zustand global
 
 ### 5. **Tipos TypeScript**
 - Interfaces e tipos compartilhados
@@ -49,12 +50,8 @@ tech-challenge-2-base/
 │   │   ├── Login.tsx                # Página de login
 │   │   ├── Cadastro.tsx            # Página de cadastro
 │   │   └── DashboardRedirect.tsx   # Redirect para dashboard
-│   ├── store/
-│   │   ├── index.ts                # Configuração Redux Store
-│   │   └── slices/
-│   │       ├── authSlice.ts        # Estado de autenticação
-│   │       ├── accountSlice.ts      # Estado da conta
-│   │       └── transactionSlice.ts # Estado de transações
+│   ├── model/
+│   │   └── types.ts                # Tipos TypeScript compartilhados
 │   ├── services/
 │   │   ├── api.ts                  # Cliente HTTP
 │   │   └── eventBus.ts             # Event Bus
@@ -77,26 +74,28 @@ O @bytebank/base exporta o componente principal via Module Federation:
 
 ```typescript
 // Entry point: src/bytebank-base.tsx
-import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import App from './App';
-import './index.css';
+import App from '../App';
+import '../styles/globals.css';
 
-const ByteBankBase = () => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+const ByteBankBase = () => <App />;
 
 export default ByteBankBase;
 ```
 
-O Redux Store é exposto globalmente para outros microfrontends:
+## 🔄 Integração com Store Global
+
+O microfrontend base acessa a store Zustand global via Module Federation do `@bytebank/root`:
 
 ```typescript
-// Store disponível globalmente
-(window as any).__BYTEBANK_STORE__ = store;
+// Importar store via Module Federation
+import useStore from '@bytebank/root/bytebank-store';
+
+// Usar a store nos componentes
+const auth = useStore((state) => state.auth);
+const login = useStore((state) => state.login);
+
+// Chamar actions
+await login({ email, password });
 ```
 
 ## 🧩 Componentes
@@ -112,42 +111,6 @@ Componentes web customizados que são carregados via bridge e integrados com Rea
 **Localização:** `src/HeaderBridge.tsx` e `FooterBridge.tsx`
 
 Componentes React que fazem a ponte entre os Web Components e o React Router, permitindo navegação e sincronização de estado.
-
-## 🗃️ Redux Store
-
-### Configuração Central
-
-**Localização:** `src/store/index.ts`
-
-```typescript
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import accountReducer from './slices/accountSlice';
-import transactionReducer from './slices/transactionSlice';
-
-const rootReducer = combineReducers({
-  auth: authReducer,
-  account: accountReducer,
-  transactions: transactionReducer,
-});
-
-export const store = configureStore({
-  reducer: rootReducer,
-  devTools: true, // Redux DevTools habilitado
-});
-
-// Expõe a store globalmente para os microfrontends
-(window as any).__BYTEBANK_STORE__ = store;
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-```
-
-### Slices
-
-- **Auth Slice**: Gerencia autenticação do usuário
-- **Account Slice**: Gerencia dados da conta selecionada
-- **Transaction Slice**: Gerencia transações financeiras
 
 ## 🔌 Services
 
@@ -229,10 +192,8 @@ npm run check     # Executa lint + format
 {
   "react": "^19.2.3",
   "react-dom": "^19.2.3",
-  "react-redux": "^9.1.0",
   "react-router-dom": "^7.12.0",
-  "@reduxjs/toolkit": "^2.2.1",
-  "@bytebank/shared": "git+https://github.com/FIAP-Grupo-30/shared.git"
+  "zustand": "^5.0.10"
 }
 ```
 
@@ -252,9 +213,6 @@ npm run check     # Executa lint + format
 ```
 
 ## 🔍 Troubleshooting
-
-### Redux DevTools não aparece
-Verificar se extensão está instalada e `devTools: true` no store.
 
 ### Web Components não carregam
 Verificar se o arquivo `bytebank-ui.js` está sendo carregado corretamente e se os bridges estão montados.
