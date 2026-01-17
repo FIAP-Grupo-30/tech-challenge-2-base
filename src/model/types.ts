@@ -1,7 +1,3 @@
-// ==========================================
-// TIPOS - ByteBank Fase 2
-// ==========================================
-
 export interface User {
 	id: string;
 	username: string;
@@ -144,12 +140,4 @@ export interface TransactionState {
 		totalItems: number;
 		totalPages: number;
 	};
-}
-
-// Evento para comunicação entre microfrontends
-export interface MFEEvent<T = unknown> {
-	type: string;
-	payload: T;
-	source: "base" | "financeiro" | "dashboard";
-	timestamp: number;
 }

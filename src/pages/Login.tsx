@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../store/slices/authSlice";
-import { selectAuth, selectIsAuthenticated } from "../store/slices/authSlice";
-import type { AppDispatch } from "../store";
+import useStore from "@bytebank/root/bytebank-store";
 
 export default function Login() {
-	const dispatch = useDispatch<AppDispatch>();
-	const auth = useSelector(selectAuth);
-	const isAuthenticated = useSelector(selectIsAuthenticated);
+	const auth = useStore(
+		(state) =>
+			state?.auth ?? {
+				user: null,
+				token: null,
+				isAuthenticated: false,
+				isLoading: false,
+				error: null,
+			},
+	);
+	const login = useStore((state) => state?.login);
 	const navigate = useNavigate();
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (auth?.isAuthenticated) {
 			navigate("/dashboard");
 		}
-	}, [isAuthenticated, navigate]);
+	}, [auth?.isAuthenticated, navigate]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			await dispatch(login({ email, password })).unwrap();
+			await login({ email, password });
 			// redirect handled by isAuthenticated effect
 		} catch (err) {
-			// error handled by slice state
+			// error handled by store state
 		}
 	};
 
@@ -50,13 +55,13 @@ export default function Login() {
 				/>
 				<button
 					type="submit"
-					disabled={auth.isLoading}
+					disabled={auth?.isLoading}
 					className="bg-green-500 text-white p-2 rounded"
 				>
-					{auth.isLoading ? "Entrando..." : "Entrar"}
+					{auth?.isLoading ? "Entrando..." : "Entrar"}
 				</button>
 			</form>
-			{auth.error && <p className="text-red-500 mt-2">{auth.error}</p>}
+			{auth?.error && <p className="text-red-500 mt-2">{auth.error}</p>}
 		</div>
 	);
 }

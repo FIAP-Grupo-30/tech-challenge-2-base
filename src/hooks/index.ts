@@ -1,12 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "../store";
+import useStore from "@bytebank/root/bytebank-store";
 import { eventBus } from "../services/eventBus";
 import type { MFEEvent } from "../types";
-
-// Hooks tipados para Redux
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 // Hook para eventos entre MFEs
 export function useMFEEvent<T = unknown>(
@@ -77,17 +72,33 @@ export function useBalanceVisibility() {
 
 // Hooks de domínio
 export function useAuth() {
-	const auth = useAppSelector((state) => state.auth);
-	const dispatch = useAppDispatch();
-	return { ...auth, dispatch };
+	const auth = useStore(
+		(state) =>
+			state?.auth ?? {
+				user: null,
+				token: null,
+				isAuthenticated: false,
+				isLoading: false,
+				error: null,
+			},
+	);
+	const login = useStore((state) => state?.login);
+	const register = useStore((state) => state?.register);
+	const logout = useStore((state) => state?.logout);
+	const checkAuth = useStore((state) => state?.checkAuth);
+	return {
+		...auth,
+		login,
+		register,
+		logout,
+		checkAuth,
+	};
 }
 
 export function useAccount() {
-	const account = useAppSelector((state) => state.account);
-	return account;
+	return useStore((state) => state.account);
 }
 
 export function useTransactions() {
-	const transactions = useAppSelector((state) => state.transactions);
-	return transactions;
+	return useStore((state) => state.transactions);
 }

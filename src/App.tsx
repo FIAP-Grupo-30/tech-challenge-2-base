@@ -1,4 +1,3 @@
-import useStore from "@bytebank/root/bytebank-store";
 import { BrowserRouter } from "react-router-dom";
 import ByteBankFooter from "./components/ByteBankFooter";
 import ByteBankHeader from "./components/ByteBankHeader";
@@ -9,8 +8,6 @@ function App() {
 		(typeof window !== "undefined" && window.__BYTEBANK_ASSET_BASE__) ||
 		"http://localhost:9001";
 
-	const { count, inc } = useStore();
-
 	return (
 		<BrowserRouter>
 			<div className="flex flex-col min-h-screen">
@@ -20,13 +17,6 @@ function App() {
 					showAuthButtons={true}
 					assetBase={assetBase}
 				/>
-
-				<div>
-					<span>{count}</span>
-					<button type="button" onClick={inc}>
-						one up
-					</button>
-				</div>
 
 				<main className="flex-1">
 					<AppRoutes />
