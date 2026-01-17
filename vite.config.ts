@@ -13,6 +13,10 @@ export default defineConfig({
 			exposes: {
 				"./bytebank-base": "./src/exposes/bytebank-base.tsx",
 			},
+			remotes: {
+				"@bytebank/financeiro": "http://localhost:9002/assets/remoteEntry.js",
+				"@bytebank/dashboard": "http://localhost:9003/assets/remoteEntry.js",
+			},
 			shared: ["react", "react-dom", "react-router-dom"],
 		}),
 	],
