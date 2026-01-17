@@ -1,7 +1,6 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Cadastro from "./pages/Cadastro";
-import DashboardRedirect from "./pages/DashboardRedirect";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 
@@ -21,7 +20,6 @@ export default function AppRoutes() {
 			<Route path="/" element={<Home />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/cadastro" element={<Cadastro />} />
-			<Route path="/dashboard" element={<DashboardRedirect />} />
 			<Route path="/dashboard" element={<DashboardApp />} />
 			<Route path="/financeiro" element={<FinanceiroApp />} />
 			{/* <Route path="/produtos" element={<Produtos />} />
