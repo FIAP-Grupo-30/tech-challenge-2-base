@@ -15,6 +15,8 @@ export default function Cadastro() {
 			},
 	);
 	const register = useStore((state) => state?.register);
+	const login = useStore((state) => state?.login);
+	const fetchAccount = useStore((state) => state?.fetchAccount);
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
@@ -30,10 +32,18 @@ export default function Cadastro() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
+			// 1. Registrar o usuário
 			await register({ username, email, password });
-			// after successful register, user can login manually or we could auto-login
-			// here we'll navigate to login so user can authenticate
-			navigate("/login");
+			
+			// 2. Fazer login automático após cadastro bem-sucedido
+			await login({ email, password });
+			
+			// 3. Carregar dados da conta
+			if (fetchAccount) {
+				await fetchAccount();
+			}
+			
+			// 4. Redirecionar para dashboard (será feito pelo useEffect quando isAuthenticated mudar)
 		} catch (err) {
 			// handled in store
 		}

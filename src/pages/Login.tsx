@@ -14,6 +14,7 @@ export default function Login() {
 			},
 	);
 	const login = useStore((state) => state?.login);
+	const fetchAccount = useStore((state) => state?.fetchAccount);
 	const navigate = useNavigate();
 
 	const [email, setEmail] = useState("");
@@ -29,6 +30,10 @@ export default function Login() {
 		e.preventDefault();
 		try {
 			await login({ email, password });
+			// Após login bem-sucedido, carregar dados da conta
+			if (fetchAccount) {
+				await fetchAccount();
+			}
 			// redirect handled by isAuthenticated effect
 		} catch (err) {
 			// error handled by store state
