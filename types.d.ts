@@ -11,3 +11,13 @@ declare module "@bytebank/dashboard/bytebank-dashboard" {
 	const DashboardApp: ComponentType;
 	export default DashboardApp;
 }
+
+declare module "@bytebank/root/bytebank-store" {
+	import type { StoreApi, UseBoundStore } from "zustand";
+	export type Store = {
+		count: number;
+		inc: () => void;
+	};
+	const store: UseBoundStore<StoreApi<Store>>;
+	export default store;
+}

@@ -16,6 +16,7 @@ export default defineConfig({
 			remotes: {
 				"@bytebank/financeiro": "http://localhost:9002/assets/remoteEntry.js",
 				"@bytebank/dashboard": "http://localhost:9003/assets/remoteEntry.js",
+				"@bytebank/root": "http://localhost:9000/assets/remoteEntry.js",
 			},
 			shared: ["react", "react-dom", "react-router-dom"],
 		}),
@@ -27,7 +28,10 @@ export default defineConfig({
 		cssCodeSplit: false,
 	},
 	server: {
-		port: 9001,
+		port: 9000,
+		fs: {
+			allow: ["."],
+		},
 	},
 	preview: {
 		port: 9001,
