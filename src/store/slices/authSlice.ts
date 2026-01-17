@@ -123,5 +123,7 @@ export const selectAuth = (state: { auth: AuthState }) => state.auth;
 export const selectUser = (state: { auth: AuthState }) => state.auth.user;
 export const selectIsAuthenticated = (state: { auth: AuthState }) =>
 	state.auth.isAuthenticated;
+export const selectToken = (state: { auth: AuthState }) => state.auth.token;
+export const selectAccountId = (state: { auth: AuthState }) => state.auth.user?.id || null;
 
 export default authSlice.reducer;
