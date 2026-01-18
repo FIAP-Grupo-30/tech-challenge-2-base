@@ -78,21 +78,21 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 	};
 
 	return (
-		<footer className="bg-black text-white py-9 font-sans">
-			<div className="max-w-[1620px] mx-auto px-4">
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-4">
+		<footer className="base:bg-black base:text-white base:py-9 base:font-sans">
+			<div className="base:max-w-[1620px] base:mx-auto base:px-4">
+				<div className="base:grid base:grid-cols-1 base:lg:grid-cols-3 base:gap-8 base:p-4">
 					{/* SERVICES */}
-					<section className="flex flex-col">
-						<h4 className="mb-5 text-[1.3rem] font-semibold text-[#47a138] text-left lg:text-center">
+					<section className="base:flex base:flex-col">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
 							Serviços
 						</h4>
-						<ul className="list-none flex flex-col gap-5">
+						<ul className="base:list-none base:flex base:flex-col base:gap-5">
 							{services.map((service) => (
 								<li key={service.href}>
 									<button
 										type="button"
 										onClick={() => handleServiceClick(service.href)}
-										className="text-white no-underline text-[18px] transition-colors duration-300 cursor-pointer hover:text-[#47a138] text-left bg-transparent border-none p-0"
+										className="base:text-white base:no-underline base:text-[18px] base:transition-colors base:duration-300 base:cursor-pointer base:hover:text-[#47a138] base:text-left base:bg-transparent base:border-none base:p-0"
 									>
 										{service.label}
 									</button>
@@ -102,38 +102,38 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 					</section>
 
 					{/* CONTACT */}
-					<section className="flex flex-col">
-						<h4 className="mb-5 text-[1.3rem] font-semibold text-[#47a138] text-left lg:text-center">
+					<section className="base:flex base:flex-col">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
 							Contato
 						</h4>
 						{contacts.map((contact, index) => (
-							<p key={index} className="text-[18px] mb-3 leading-[1.8]">
+							<p key={index} className="base:text-[18px] base:mb-3 base:leading-[1.8]">
 								{contact.text}
 							</p>
 						))}
 					</section>
 
 					{/* BRAND & SOCIAL */}
-					<section className="flex flex-col">
-						<h4 className="mb-5 text-[1.3rem] font-semibold text-[#47a138] text-left lg:text-center">
+					<section className="base:flex base:flex-col">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
 							Desenvolvido por Bytebank
 						</h4>
 
-						<figure className="flex mt-3 mb-8 justify-center">
+						<figure className="base:flex base:mt-3 base:mb-8 base:justify-center">
 							<img
 								src={resolveAsset(logoUrl)}
 								alt="Logo Branco ByteBank"
-								className="w-[180px] h-[35px]"
+								className="base:w-[180px] base:h-[35px]"
 							/>
 						</figure>
 
-						<ul className="list-none flex items-center gap-9 justify-center">
+						<ul className="base:list-none base:flex base:items-center base:gap-9 base:justify-center">
 							{socialLinks.map((social) => (
 								<li key={social.name}>
 									<button
 										type="button"
 										onClick={() => handleSocialClick(social.href)}
-										className="inline-block transition-transform duration-300 cursor-pointer hover:scale-110 bg-transparent border-none p-0"
+										className="base:inline-block base:transition-transform base:duration-300 base:cursor-pointer base:hover:scale-110 base:bg-transparent base:border-none base:p-0"
 										aria-label={social.name}
 									>
 										<img
@@ -141,8 +141,8 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 											alt={`${social.name} icon`}
 											className={`${
 												social.name.toLowerCase() === "youtube"
-													? "w-[38px] h-[38px]"
-													: "w-9 h-9"
+													? "base:w-[38px] base:h-[38px]"
+													: "base:w-9 base:h-9"
 											}`}
 										/>
 									</button>

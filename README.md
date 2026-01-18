@@ -158,6 +158,70 @@ body {
 }
 ```
 
+### Uso de Prefixos Tailwind CSS
+
+⚠️ **IMPORTANTE**: Este projeto utiliza o prefixo `base:` para todas as classes Tailwind CSS para evitar conflitos com outros microfrontends.
+
+#### Configuração
+
+O prefixo é configurado no arquivo `src/globals.css`:
+
+```css
+@import "tailwindcss" prefix(base);
+```
+
+#### Como Usar Classes Tailwind
+
+Todas as classes Tailwind usadas diretamente no JSX devem incluir o prefixo `base:`:
+
+```tsx
+// ✅ CORRETO - Com prefixo
+<div className="base:flex base:items-center base:justify-center">
+  <p className="base:text-2xl base:font-bold base:text-white">Conteúdo</p>
+</div>
+
+// ❌ ERRADO - Sem prefixo (pode causar conflitos)
+<div className="flex items-center justify-center">
+  <p className="text-2xl font-bold text-white">Conteúdo</p>
+</div>
+```
+
+#### Variantes e Responsividade
+
+Para variantes como `hover:`, `focus:`, e breakpoints responsivos (`md:`, `lg:`, etc.), use o formato `[prefixo]:[variante]:[classe]`:
+
+```tsx
+// Hover
+<button className="base:bg-green-500 base:hover:bg-green-600">
+
+// Responsividade
+<div className="base:flex base:flex-col base:md:flex-row">
+
+// Classes arbitrárias
+<div className="base:bg-[#47A138] base:w-[170px]">
+```
+
+#### No @apply (globals.css)
+
+Quando usar `@apply` dentro de `@layer components`, use o formato `[prefixo]:[variante]:[classe]`:
+
+```css
+@layer components {
+  .minha-classe {
+    @apply base:bg-white base:hover:bg-gray-100 base:md:flex;
+  }
+}
+```
+
+#### Classes Customizadas (NÃO precisam de prefixo)
+
+Classes customizadas definidas em `@layer components` (como `.btn-bytebank-primary`) **NÃO** precisam de prefixo, pois já são nomes únicos:
+
+```tsx
+// ✅ CORRETO - Classe customizada sem prefixo
+<button className="btn-bytebank-primary">Clique aqui</button>
+```
+
 ## 🛠️ Comandos
 
 ### Desenvolvimento

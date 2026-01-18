@@ -17,15 +17,15 @@ export default function Home() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="flex flex-col bg-[#FFF]">
-			<div className="bg-gradient-to-b from-[#004D61] to-[#FFF] pt-10 pb-23">
-				<div className="container mx-auto">
+		<div className="base:flex base:flex-col base:bg-[#FFF]">
+			<div className="base:bg-gradient-to-b base:from-[#004D61] base:to-[#FFF] base:pt-10 base:pb-23">
+				<div className="base:container base:mx-auto">
 					{/* BANNER */}
-					<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-18 gap-14 p-5">
+					<div className="base:grid base:lg:grid-cols-2 base:md:grid-cols-1 base:sm:grid-cols-1 base:mb-18 base:gap-14 base:p-5">
 						<section>
-							<div className="flex items-center h-full">
+							<div className="base:flex base:items-center base:h-full">
 								<div>
-									<h1 className="font-bold text-[33px] leading-[1.5em] lg:text-left md:text-center text-center">
+									<h1 className="base:font-bold base:text-[33px] base:leading-[1.5em] base:lg:text-left base:md:text-center base:text-center">
 										Experimente mais liberdade no controle da sua vida
 										financeira. Crie sua conta com a gente!!!
 									</h1>
@@ -35,7 +35,7 @@ export default function Home() {
 
 						<section>
 							<img
-								className="mx-auto max-w-full h-auto"
+								className="base:mx-auto base:max-w-full base:h-auto"
 								src={banner}
 								alt="Banner"
 								width="900"
@@ -45,11 +45,11 @@ export default function Home() {
 					</div>
 
 					{/* CTA MOBILE */}
-					<div className="sm:block md:block lg:hidden mb-18 pl-4 pr-4">
-						<div className="flex gap-5 md:grid-cols-2">
+					<div className="base:sm:block base:md:block base:lg:hidden base:mb-18 base:pl-4 base:pr-4">
+						<div className="base:flex base:gap-5 base:md:grid-cols-2">
 							<button
 								onClick={() => navigate("/cadastro")}
-								className="inline-flex justify-center items-center h-14 text-center rounded-[8px] bg-[#000] hover:bg-[transparent] border-[3px] border-[#000] w-full font-semibold text-[#FFF] text-[19px] hover:text-[#000] transition duration-300"
+								className="base:inline-flex base:justify-center base:items-center base:h-14 base:text-center base:rounded-[8px] base:bg-[#000] base:hover:bg-[transparent] base:border-[3px] base:border-[#000] base:w-full base:font-semibold base:text-[#FFF] base:text-[19px] base:hover:text-[#000] base:transition base:duration-300"
 								aria-label="Abrir minha conta"
 							>
 								Abrir minha conta
@@ -57,7 +57,7 @@ export default function Home() {
 
 							<button
 								onClick={() => navigate("/login")}
-								className="inline-flex justify-center items-center h-14 text-center rounded-[8px] bg-transparent hover:bg-[#000] border-[3px] border-[#000] w-full font-semibold text-[#000] hover:text-[#FFF] text-[19px] transition duration-300"
+								className="base:inline-flex base:justify-center base:items-center base:h-14 base:text-center base:rounded-[8px] base:bg-transparent base:hover:bg-[#000] base:border-[3px] base:border-[#000] base:w-full base:font-semibold base:text-[#000] base:hover:text-[#FFF] base:text-[19px] base:transition base:duration-300"
 								aria-label="Já tenho conta"
 							>
 								Já tenho conta
@@ -67,16 +67,16 @@ export default function Home() {
 
 					{/* VANTAGENS */}
 					<div>
-						<h2 className="text-center font-bold text-[30px] mb-16">
+						<h2 className="base:text-center base:font-bold base:text-[30px] base:mb-16">
 							Vantagens do nosso banco:
 						</h2>
 
-						<div className="grid gap-14 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+						<div className="base:grid base:gap-14 base:md:grid-cols-2 base:lg:grid-cols-2 base:xl:grid-cols-4">
 							{(vantagensMock as Vantagem[]).map((vantagem) => (
-								<section key={vantagem.id} className="text-center p-4">
+								<section key={vantagem.id} className="base:text-center base:p-4">
 									<figure>
 										<img
-											className="mx-auto w-20 h-auto"
+											className="base:mx-auto base:w-20 base:h-auto"
 											src={
 												vantagem.imagemUrl === "conta-e-cartao-gratuitos.svg"
 													? contaImg
@@ -94,11 +94,11 @@ export default function Home() {
 										/>
 									</figure>
 
-									<h3 className="font-bold text-[22px] text-[#47A138] mt-5 mb-5">
+									<h3 className="base:font-bold base:text-[22px] base:text-[#47A138] base:mt-5 base:mb-5">
 										{vantagem.titulo}
 									</h3>
 
-									<p className="text-[#767676] text-[19px]">
+									<p className="base:text-[#767676] base:text-[19px]">
 										{vantagem.descricao}
 									</p>
 								</section>
