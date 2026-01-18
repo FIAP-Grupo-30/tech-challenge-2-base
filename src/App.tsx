@@ -10,17 +10,17 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<div className="flex flex-col min-h-screen">
-				<ByteBankHeader
-					logoUrl="logo-green.svg"
-					logoSmallUrl="logo-small.svg"
-					showAuthButtons={true}
-					assetBase={assetBase}
-				/>
+		<div className="base:flex base:flex-col base:min-h-screen">
+			<ByteBankHeader
+				logoUrl="logo-green.svg"
+				logoSmallUrl="logo-small.svg"
+				showAuthButtons={true}
+				assetBase={assetBase}
+			/>
 
-				<main className="flex-1">
-					<AppRoutes />
-				</main>
+			<main className="base:flex-1">
+				<AppRoutes />
+			</main>
 
 				<ByteBankFooter logoUrl="logo-white.svg" assetBase={assetBase} />
 			</div>

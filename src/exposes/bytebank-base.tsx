@@ -1,5 +1,5 @@
 import App from "../App";
-import "../styles/globals.css";
+import "../globals.css";
 
 const ByteBankBase = () => <App />;
 

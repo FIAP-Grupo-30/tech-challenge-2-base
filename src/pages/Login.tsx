@@ -36,32 +36,32 @@ export default function Login() {
 	};
 
 	return (
-		<div className="max-w-md mx-auto p-6">
-			<h2 className="text-2xl font-bold mb-4">Login</h2>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+		<div className="base:max-w-md base:mx-auto base:p-6">
+			<h2 className="base:text-2xl base:font-bold base:mb-4">Login</h2>
+			<form onSubmit={handleSubmit} className="base:flex base:flex-col base:gap-4">
 				<input
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					placeholder="Email"
 					type="email"
-					className="p-2 border rounded"
+					className="base:p-2 base:border base:rounded"
 				/>
 				<input
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					placeholder="Senha"
 					type="password"
-					className="p-2 border rounded"
+					className="base:p-2 base:border base:rounded"
 				/>
 				<button
 					type="submit"
 					disabled={auth?.isLoading}
-					className="bg-green-500 text-white p-2 rounded"
+					className="base:bg-green-500 base:text-white base:p-2 base:rounded"
 				>
 					{auth?.isLoading ? "Entrando..." : "Entrar"}
 				</button>
 			</form>
-			{auth?.error && <p className="text-red-500 mt-2">{auth.error}</p>}
+			{auth?.error && <p className="base:text-red-500 base:mt-2">{auth.error}</p>}
 		</div>
 	);
 }
