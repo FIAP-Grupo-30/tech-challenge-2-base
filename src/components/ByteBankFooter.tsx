@@ -27,7 +27,6 @@ const DEFAULT_SERVICES: Service[] = [
 	{ label: "Home", href: "/" },
 	{ label: "Dashboard", href: "/dashboard" },
 	{ label: "Financeiro", href: "/financeiro" },
-	{ label: "Para você", href: "/paravoce" },
 ];
 
 const DEFAULT_CONTACTS: Contact[] = [
@@ -83,7 +82,7 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 				<div className="base:grid base:grid-cols-1 base:lg:grid-cols-3 base:gap-8 base:p-4">
 					{/* SERVICES */}
 					<section className="base:flex base:flex-col">
-						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left">
 							Serviços
 						</h4>
 						<ul className="base:list-none base:flex base:flex-col base:gap-5">
@@ -103,7 +102,7 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 
 					{/* CONTACT */}
 					<section className="base:flex base:flex-col">
-						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left">
 							Contato
 						</h4>
 						{contacts.map((contact, index) => (
@@ -115,11 +114,11 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 
 					{/* BRAND & SOCIAL */}
 					<section className="base:flex base:flex-col">
-						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center">
+						<h4 className="base:mb-5 base:text-[1.3rem] base:font-semibold base:text-[#47a138] base:text-left base:lg:text-center base:sm:text-left">
 							Desenvolvido por Bytebank
 						</h4>
 
-						<figure className="base:flex base:mt-3 base:mb-8 base:justify-center">
+						<figure className="base:flex base:mt-3 base:mb-8 base:justify-center base:lg:justify-center base:sm:justify-start">
 							<img
 								src={resolveAsset(logoUrl)}
 								alt="Logo Branco ByteBank"
@@ -127,7 +126,7 @@ const ByteBankFooter: React.FC<ByteBankFooterProps> = ({
 							/>
 						</figure>
 
-						<ul className="base:list-none base:flex base:items-center base:gap-9 base:justify-center">
+						<ul className="base:list-none base:flex base:items-center base:gap-9 base:justify-center base:lg:justify-center base:sm:justify-start">
 							{socialLinks.map((social) => (
 								<li key={social.name}>
 									<button

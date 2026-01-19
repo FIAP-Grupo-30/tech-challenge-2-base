@@ -18,7 +18,6 @@ const DEFAULT_NAV_ITEMS: NavItem[] = [
 	{ name: "Home", href: "/" },
 	{ name: "Dashboard", href: "/dashboard" },
 	{ name: "Financeiro", href: "/financeiro" },
-	{ name: "Para você", href: "/paravoce" },
 ];
 
 const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
@@ -144,7 +143,7 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 
 					{/* AUTH BUTTONS */}
 					{showAuthButtons && (
-						<div className="base:hidden base:xl:flex base:gap-5 base:flex-shrink-0">
+						<div className="base:lg:order-3 base:hidden base:xl:flex base:gap-5 base:flex-shrink-0">
 							<button
 								type="button"
 								onClick={() => handleAuthClick("/cadastro")}
@@ -166,7 +165,7 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 
 			{/* MOBILE MENU */}
 			<div
-				className={`base:fixed base:top-[73px] base:left-0 base:right-0 base:bg-black base:border-t base:border-[rgba(71,161,56,0.2)] base:px-6 base:md:px-10 base:flex-col base:gap-2 base:max-h-[calc(100vh-73px)] base:overflow-y-auto base:z-40 base:transition-all base:duration-300 ${
+				className={`base:fixed base:top-[73px] base:md:pt-5 base:md:pb-10 base:left-0 base:right-0 base:bg-black base:border-t base:border-[rgba(71,161,56,0.2)] base:px-6 base:md:px-10 base:flex-col base:gap-2 base:max-h-[calc(100vh-73px)] base:overflow-y-auto base:z-40 base:transition-all base:duration-300 ${
 					mobileMenuOpen ? "base:flex" : "base:hidden"
 				}`}
 			>
