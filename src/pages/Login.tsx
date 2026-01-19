@@ -36,32 +36,32 @@ export default function Login() {
 	};
 
 	return (
-		<div className="base:max-w-md base:mx-auto base:p-6">
-			<h2 className="base:text-2xl base:font-bold base:mb-4">Login</h2>
+		<div className="base:max-w-[600px] base:mx-auto base:p-8 base:bg-white base:rounded base:shadow base:mt-12">
+			<h2 className="base:text-2xl base:font-bold base:mb-5">Login</h2>
 			<form onSubmit={handleSubmit} className="base:flex base:flex-col base:gap-4">
 				<input
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					placeholder="Email"
 					type="email"
-					className="base:p-2 base:border base:rounded"
+					className="base:p-3 base:border base:border-solid base:border-[#CCC] base:rounded"
 				/>
 				<input
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					placeholder="Senha"
 					type="password"
-					className="base:p-2 base:border base:rounded"
+					className="base:p-3 base:border base:border-solid base:border-[#CCC] base:rounded"
 				/>
 				<button
 					type="submit"
 					disabled={auth?.isLoading}
-					className="base:bg-green-500 base:text-white base:p-2 base:rounded"
+					className="base:bg-[#47a138] base:text-white base:p-3 base:rounded"
 				>
 					{auth?.isLoading ? "Entrando..." : "Entrar"}
 				</button>
 			</form>
-			{auth?.error && <p className="base:text-red-500 base:mt-2">{auth.error}</p>}
+			{auth?.error && <p className="base:text-red-500 base:mt-3">{auth.error}</p>}
 		</div>
 	);
 }
