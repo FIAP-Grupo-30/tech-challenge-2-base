@@ -295,6 +295,11 @@ asdf install nodejs 24.12.0
 asdf local nodejs 24.12.0
 ```
 
+### Plataforma de hospedagem
+
+Vercel - https://vercel.com/
+
+
 ## 👥 Equipe
 
 **FIAP Grupo 30 - Tech Challenge 2**
