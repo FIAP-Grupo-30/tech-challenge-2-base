@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks";
 
 interface NavItem {
 	name: string;
@@ -30,6 +31,7 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { user, isAuthenticated, logout } = useAuth();
 
 	const resolveAsset = (path: string): string => {
 		if (!path) return "";
@@ -49,6 +51,12 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 
 	const handleAuthClick = (href: string) => {
 		navigate(href);
+		setMobileMenuOpen(false);
+	};
+
+	const handleLogout = async () => {
+		await logout();
+		navigate("/login");
 		setMobileMenuOpen(false);
 	};
 
@@ -142,24 +150,39 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 					</div>
 
 					{/* AUTH BUTTONS */}
-					{showAuthButtons && (
-						<div className="base:lg:order-3 base:hidden base:xl:flex base:gap-5 base:flex-shrink-0">
-							<button
-								type="button"
-								onClick={() => handleAuthClick("/cadastro")}
-								className="base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:min-w-[180px] base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-[#47a138] base:text-white base:border-none base:hover:bg-white base:hover:text-[#59b449]"
-							>
-								Abrir minha conta
-							</button>
-							<button
-								type="button"
-								onClick={() => handleAuthClick("/login")}
-								className="base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:min-w-[180px] base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-transparent base:border-[3px] base:border-[#47a138] base:text-[#47a138] base:hover:bg-[#47a138] base:hover:text-white"
-							>
-								Já tenho conta
-							</button>
-						</div>
-					)}
+									 {showAuthButtons && !isAuthenticated && (
+										 <div className="base:lg:order-3 base:hidden base:xl:flex base:gap-5 base:flex-shrink-0">
+											 <button
+												 type="button"
+												 onClick={() => handleAuthClick("/cadastro")}
+												 className="base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:min-w-[180px] base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-[#47a138] base:text-white base:border-none base:hover:bg-white base:hover:text-[#59b449]"
+											 >
+												 Abrir minha conta
+											 </button>
+											 <button
+												 type="button"
+												 onClick={() => handleAuthClick("/login")}
+												 className="base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:min-w-[180px] base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-transparent base:border-[3px] base:border-[#47a138] base:text-[#47a138] base:hover:bg-[#47a138] base:hover:text-white"
+											 >
+												 Já tenho conta
+											 </button>
+										 </div>
+									 )}
+									 {isAuthenticated && user && (
+										 <div className="base:lg:order-3 base:hidden base:xl:flex base:gap-5 base:flex-shrink-0 base:items-center">
+											   <span className="base:text-base base:font-semibold base:text-[#47a138]">Bem vindo, {user.username}!</span>
+											 <button
+												 type="button"
+												 onClick={handleLogout}
+												 className="base:inline-flex base:justify-center base:items-center base:h-11 base:w-11 base:text-center base:rounded-full base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:bg-[#F5F5F5] base:border-none base:text-[#47a138] base:shadow-sm base:hover:bg-[#47a138] base:hover:text-white"
+												 aria-label="Logout"
+											 >
+												 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="base:w-7 base:h-7">
+													 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+												 </svg>
+											 </button>
+										 </div>
+									 )}
 				</div>
 			</div>
 
@@ -180,24 +203,39 @@ const ByteBankHeader: React.FC<ByteBankHeaderProps> = ({
 					</button>
 				))}
 
-				{showAuthButtons && (
-					<div className="base:mt-4 base:flex base:flex-col base:gap-3">
-						<button
-							type="button"
-							onClick={() => handleAuthClick("/cadastro")}
-							className="base:w-full base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-[#47a138] base:text-white base:border-none base:hover:bg-white base:hover:text-[#59b449]"
-						>
-							Abrir minha conta
-						</button>
-						<button
-							type="button"
-							onClick={() => handleAuthClick("/login")}
-							className="base:w-full base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-transparent base:border-[3px] base:border-[#47a138] base:text-[#47a138] base:hover:bg-[#47a138] base:hover:text-white"
-						>
-							Já tenho conta
-						</button>
-					</div>
-				)}
+							 {showAuthButtons && !isAuthenticated && (
+								 <div className="base:mt-4 base:flex base:flex-col base:gap-3">
+									 <button
+										 type="button"
+										 onClick={() => handleAuthClick("/cadastro")}
+										 className="base:w-full base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-[#47a138] base:text-white base:border-none base:hover:bg-white base:hover:text-[#59b449]"
+									 >
+										 Abrir minha conta
+									 </button>
+									 <button
+										 type="button"
+										 onClick={() => handleAuthClick("/login")}
+										 className="base:w-full base:inline-flex base:justify-center base:items-center base:h-11 base:text-center base:rounded-lg base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:whitespace-nowrap base:bg-transparent base:border-[3px] base:border-[#47a138] base:text-[#47a138] base:hover:bg-[#47a138] base:hover:text-white"
+									 >
+										 Já tenho conta
+									 </button>
+								 </div>
+							 )}
+							 {isAuthenticated && user && (
+								 <div className="base:mt-4 base:flex base:flex-col base:gap-3 base:items-center">
+									   <span className="base:text-base base:font-semibold base:text-[#47a138]">Bem vindo {user.username}</span>
+									 <button
+										 type="button"
+										 onClick={handleLogout}
+										 className="base:inline-flex base:justify-center base:items-center base:h-11 base:w-11 base:text-center base:rounded-full base:text-base base:font-semibold base:transition-all base:duration-300 base:no-underline base:cursor-pointer base:bg-[#F5F5F5] base:border-none base:text-[#47a138] base:shadow-sm base:hover:bg-[#47a138] base:hover:text-white"
+										 aria-label="Logout"
+									 >
+										 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="base:w-7 base:h-7">
+											 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+										 </svg>
+									 </button>
+								 </div>
+							 )}
 			</div>
 		</header>
 	);
